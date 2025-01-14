@@ -56,25 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="register.php">
+        <form method="POST" action="register.php" onsubmit="validateRegisterForm(event)">
             <div class="form-group">
-                <input type="text" name="firstname" placeholder="First Name" required>
+                <input type="text" name="firstname" placeholder="First Name" required
+                       oninput="this.classList.remove('error')">
             </div>
             
             <div class="form-group">
-                <input type="text" name="lastname" placeholder="Last Name" required>
+                <input type="text" name="lastname" placeholder="Last Name" required
+                       oninput="this.classList.remove('error')">
             </div>
             
             <div class="form-group">
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email" required
+                       oninput="this.classList.remove('error')">
             </div>
             
             <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Password" required
+                       oninput="updatePasswordStrength(this.value); this.classList.remove('error')">
+                <div id="password-strength"></div>
             </div>
             
             <div class="form-group">
-                <select name="role" required>
+                <select name="role" required onchange="this.classList.remove('error')">
                     <option value="">Select Role</option>
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
@@ -86,5 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Already have an account? <a href="auth.php">Login here</a></p>
         </form>
     </div>
+    <script src="assets/js/validation.js"></script>
 </body>
 </html> 
