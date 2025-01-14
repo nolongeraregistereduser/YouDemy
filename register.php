@@ -41,6 +41,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+
+.error {
+    border-color: #dc3545 !important;
+}
+
+#password-strength {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+#password-strength.weak { color: #dc3545; }
+#password-strength.medium { color: #ffc107; }
+#password-strength.strong { color: #28a745; }
+#password-strength.very-strong { color: #20c997; }
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+
+    </style>
     <title>Register - Youdemy</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>

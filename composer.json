@@ -1,0 +1,20 @@
+{
+    "name": "youdemy/youdemy",
+    "description": "Implementing Email System Notification when Approving a Teacher",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Youdemy\\Youdemy\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Z0UH4IRI"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
