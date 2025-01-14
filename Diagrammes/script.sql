@@ -11,6 +11,8 @@ CREATE TABLE utilisateurs (
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
+
+-- kk--
 -- Table pour les rôles
 CREATE TABLE roles (
     id INT AUTO_INCREMENT PRIMARY KEY,
