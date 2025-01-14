@@ -36,6 +36,11 @@ try {
 } catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
+
+// Include header
+require_once 'includes/header.php';
+// Include sidebar
+require_once 'includes/sidebar.php';
 ?>
 
 <!DOCTYPE html>
@@ -43,103 +48,13 @@ try {
 <head>
     <title>Admin Dashboard - Youdemy</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <!-- Add your CSS framework here (Bootstrap, Tailwind, etc.) -->
-
-    <style> 
-
-/* Admin Dashboard Styles */
-.admin-container {
-    display: flex;
-    min-height: 100vh;
-}
-
-.sidebar {
-    width: 250px;
-    background: #2c3e50;
-    color: white;
-    padding: 20px;
-}
-
-.sidebar nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar nav ul li a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    margin: 5px 0;
-    border-radius: 5px;
-}
-
-.sidebar nav ul li a:hover,
-.sidebar nav ul li a.active {
-    background: #34495e;
-}
-
-.main-content {
-    flex: 1;
-    padding: 20px;
-    background: #f5f6fa;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.action-buttons {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #3498db;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    text-align: center;
-}
-
-.btn:hover {
-    background: #2980b9;
-}
-
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="admin-container">
-        <!-- Sidebar/Navigation -->
-        <div class="sidebar">
-            <h2>Admin Dashboard</h2>
-            <nav>
-                <ul>
-                    <li><a href="index.php" class="active">Dashboard</a></li>
-                    <li><a href="teachers.php">Manage Teachers</a></li>
-                    <li><a href="users.php">Manage Users</a></li>
-                    <li><a href="courses.php">Manage Courses</a></li>
-                    <li><a href="categories.php">Categories & Tags</a></li>
-                    <li><a href="statistics.php">Statistics</a></li>
-                    <li><a href="../logout.php">Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-
+        <!-- La sidebar est maintenant incluse via includes/sidebar.php -->
+        
         <!-- Main Content -->
         <div class="main-content">
             <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?></h1>
@@ -185,5 +100,8 @@ try {
             </div>
         </div>
     </div>
+
+    <script src="../assets/js/admin.js"></script>
+
 </body>
 </html>
