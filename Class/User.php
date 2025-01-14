@@ -33,7 +33,15 @@ class User {
             $this->email = htmlspecialchars(strip_tags($data['email']));
             $this->password = password_hash($data['password'], PASSWORD_DEFAULT);
             $this->role = htmlspecialchars(strip_tags($data['role']));
-            $this->status = ($this->role === 'teacher') ? 'pending' : 'active';
+            
+            // Set status based on role for professor && admin when creation .. i need to change it later for better security
+            if ($this->role === 'admin') {
+                $this->status = 'active';
+            } else if ($this->role === 'teacher') {
+                $this->status = 'pending';
+            } else {
+                $this->status = 'active';
+            }
             
             // Bind data
             $stmt->bindParam(':firstname', $this->firstname);
