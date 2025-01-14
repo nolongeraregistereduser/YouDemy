@@ -1,0 +1,64 @@
+<mxfile host="65bd71144e">
+    <diagram name="Youdemy - Use Case Diagram" id="YoudemyUseCase">
+        <mxGraphModel dx="1387" dy="938" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="actor_visiteur" value="Visiteur" style="shape=umlActor;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="30" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_etudiant" value="Étudiant" style="shape=umlActor;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="220" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_enseignant" value="Enseignant" style="shape=umlActor;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="390" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="actor_admin" value="Administrateur" style="shape=umlActor;" parent="1" vertex="1">
+                    <mxGeometry x="20" y="550" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_consulter_catalogue" value="Consulter le catalogue" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="40" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_rechercher_cours" value="Rechercher un cours" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="130" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_creer_compte" value="Créer un compte" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="200" y="300" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_sauthentifier" value="S'authentifier" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="414" y="230" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_inscrire_cours" value="S'inscrire à un cours" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="350" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_mes_cours" value="Accéder à Mes cours" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="400" y="450" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_ajouter_cours" value="Ajouter un cours" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="400" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_statistiques" value="Consulter les statistiques" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="500" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_valider_comptes" value="Valider les comptes enseignants" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="550" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_gestion_utilisateurs" value="Gérer les utilisateurs" style="ellipse;whiteSpace=wrap;" parent="1" vertex="1">
+                    <mxGeometry x="800" y="650" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn1" style="endArrow=none;" parent="1" source="actor_visiteur" target="uc_consulter_catalogue" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn2" style="endArrow=none;" parent="1" source="actor_etudiant" target="uc_sauthentifier" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn3" style="endArrow=none;" parent="1" source="actor_enseignant" target="uc_ajouter_cours" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="conn4" style="endArrow=none;" parent="1" source="actor_admin" target="uc_valider_comptes" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
