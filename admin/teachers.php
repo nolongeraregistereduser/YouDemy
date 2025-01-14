@@ -2,6 +2,7 @@
 session_start();
 require_once '../config/database.php';
 require_once '../Class/User.php';
+require_once '../Class/Notification.php';
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
@@ -11,18 +12,47 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
 
 $db = new Database();
 $pdo = $db->getConnection();
+$notification = new Notification($pdo);
 
 // Handle teacher status updates
 if(isset($_POST['action']) && isset($_POST['teacher_id'])) {
     $action = $_POST['action'];
     $teacherId = $_POST['teacher_id'];
     
-    $status = ($action === 'approve') ? 'active' : 'blocked';
+    try {
+        // Start transaction
+        $pdo->beginTransaction();
+        
+        $status = ($action === 'approve') ? 'active' : 'blocked';
+        
+        // Update teacher status
+        $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ? AND role = 'teacher'");
+        $stmt->execute([$status, $teacherId]);
+        
+        // If approving teacher, send notification
+        if($action === 'approve') {
+            // Get teacher details
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+            $stmt->execute([$teacherId]);
+            $teacher = $stmt->fetch();
+            
+            // Send approval email
+            if($notification->sendApprovalEmail($teacher)) {
+                $_SESSION['success'] = "Teacher approved and notification sent successfully!";
+            } else {
+                $_SESSION['warning'] = "Teacher approved but notification failed to send.";
+            }
+        } else {
+            $_SESSION['success'] = "Teacher status updated successfully!";
+        }
+        
+        $pdo->commit();
+        
+    } catch(Exception $e) {
+        $pdo->rollBack();
+        $_SESSION['error'] = "Error: " . $e->getMessage();
+    }
     
-    $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ? AND role = 'teacher'");
-    $stmt->execute([$status, $teacherId]);
-    
-    $_SESSION['success'] = "Teacher status updated successfully!";
     header('Location: teachers.php');
     exit();
 }
@@ -49,6 +79,7 @@ $teachers = $stmt->fetchAll();
 <head>
     <title>Manage Teachers - Youdemy</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/notifications.js"></script>
 </head>
 <body>
     <div class="admin-container">
@@ -57,6 +88,34 @@ $teachers = $stmt->fetchAll();
 
         <div class="main-content">
             <h1>Manage Teachers</h1>
+
+            <!-- Add this notification section -->
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?php 
+                        echo $_SESSION['success'];
+                        unset($_SESSION['success']);
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['warning'])): ?>
+                <div class="alert alert-warning">
+                    <?php 
+                        echo $_SESSION['warning'];
+                        unset($_SESSION['warning']);
+                    ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="alert alert-danger">
+                    <?php 
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Status Filter -->
             <div class="filter-section">
