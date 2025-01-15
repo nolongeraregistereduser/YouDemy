@@ -143,7 +143,6 @@ require_once 'includes/sidebar.php';
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nom</th>
                         <th>Date de création</th>
                         <th>Actions</th>
@@ -152,19 +151,16 @@ require_once 'includes/sidebar.php';
                 <tbody>
                     <?php foreach ($tags as $t): ?>
                     <tr>
-                        <td><?php echo $t['id']; ?></td>
                         <td><?php echo htmlspecialchars($t['name']); ?></td>
                         <td><?php echo $t['created_at']; ?></td>
                         <td>
-                            <button class="btn btn-sm btn-primary" 
-                                    onclick="editTag(<?php echo htmlspecialchars(json_encode($t)); ?>)">
+                            <button class="btn btn-sm btn-primary" onclick="editTag(<?php echo htmlspecialchars(json_encode($t)); ?>)">
                                 Modifier
                             </button>
                             <form method="POST" style="display: inline;">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="id" value="<?php echo $t['id']; ?>">
-                                <button type="submit" class="btn btn-sm btn-danger" 
-                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce tag ?')">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce tag ?')">
                                     Supprimer
                                 </button>
                             </form>

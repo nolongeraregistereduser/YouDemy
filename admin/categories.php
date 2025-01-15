@@ -110,7 +110,6 @@ require_once 'includes/sidebar.php';
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nom</th>
                         <th>Description</th>
                         <th>Actions</th>
@@ -119,7 +118,6 @@ require_once 'includes/sidebar.php';
                 <tbody>
                     <?php foreach ($categories as $cat): ?>
                     <tr>
-                        <td><?php echo $cat['id']; ?></td>
                         <td><?php echo htmlspecialchars($cat['name']); ?></td>
                         <td><?php echo htmlspecialchars($cat['description']); ?></td>
                         <td>
