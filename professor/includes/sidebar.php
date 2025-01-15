@@ -20,9 +20,9 @@
             <i class="fas fa-book"></i>
             <span>My Courses</span>
         </a>
-        <a href="create-course.php" class="nav-item <?php echo $page === 'create-course' ? 'active' : ''; ?>">
+        <a href="add_course.php" class="nav-item">
             <i class="fas fa-plus-circle"></i>
-            <span>Create Course</span>
+            <span>Ajouter un cours</span>
         </a>
         <a href="students.php" class="nav-item <?php echo $page === 'students' ? 'active' : ''; ?>">
             <i class="fas fa-users"></i>
