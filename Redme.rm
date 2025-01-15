@@ -1,0 +1,18 @@
+Youdemy/
+├── assets/
+│   ├── css/
+│   ├── js/
+│   └── images/
+├── config/
+│   └── database.php
+├── classes/
+│   └── User.php
+├── admin/
+│   └── index.php
+├── teacher/
+│   └── index.php
+├── student/
+│   └── index.php
+├── auth.php (login)
+├── register.php
+└── index.php
