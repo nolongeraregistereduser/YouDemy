@@ -509,3 +509,10 @@ table tr:last-child td {
     background: #22c55e;
     color: white;
 }
+
+.alert {
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
