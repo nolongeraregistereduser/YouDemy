@@ -35,6 +35,12 @@
                     <span>Categories</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="tags.php" class="nav-link">
+                    <i class="fas fa-tags"></i>
+                    <span>Gestion des Tags</span>
+                </a>
+            </li>
             <li>
                 <a href="../logout.php">
                     <i class="fas fa-sign-out-alt"></i>
