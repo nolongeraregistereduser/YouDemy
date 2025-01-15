@@ -71,24 +71,33 @@ require_once 'includes/sidebar.php';
     <!-- Bouton pour afficher le form d'ajout -->
     <button id="showAddForm" class="btn btn-primary mb-3">Ajouter une nouvelle catégorie</button>
 
-    <!-- Formulaire d'ajout -->
-    <div class="card mb-4" id="addCategoryForm" style="display: none;">
-        <div class="card-header">
-            <h2>Ajouter une catégorie</h2>
-        </div>
-        <div class="card-body">
-            <form method="POST">
-                <input type="hidden" name="action" value="create">
-                <div class="form-group">
-                    <label>Nom</label>
-                    <input type="text" name="name" class="form-control" required>
+    <!-- Modal d'ajout -->
+    <div class="modal" id="addModal" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter une catégorie</h5>
+                    <button type="button" class="close" onclick="closeAddModal()">
+                        <span>&times;</span>
+                    </button>
                 </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea name="description" class="form-control"></textarea>
+                <div class="modal-body">
+                    <form method="POST">
+                        <input type="hidden" name="action" value="create">
+                        <div class="form-group">
+                            <label>Nom</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-primary">Ajouter</button>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -163,7 +172,14 @@ require_once 'includes/sidebar.php';
 </div>
 
 <script>
-// Function dial edit category
+document.getElementById('showAddForm').addEventListener('click', function() {
+    document.getElementById('addModal').style.display = 'block';
+});
+
+function closeAddModal() {
+    document.getElementById('addModal').style.display = 'none';
+}
+
 function editCategory(category) {
     const modal = document.getElementById('editModal');
     document.getElementById('edit_id').value = category.id;
@@ -173,21 +189,15 @@ function editCategory(category) {
 }
 
 function closeEditModal() {
-    const modal = document.getElementById('editModal');
-    modal.style.display = 'none';
+    document.getElementById('editModal').style.display = 'none';
 }
 
-// Show/Hide forms
-document.getElementById('showAddForm').addEventListener('click', function() {
-    const form = document.getElementById('addCategoryForm');
-    if (form.style.display === 'none') {
-        form.style.display = 'block';
-        this.textContent = 'Masquer le formulaire';
-    } else {
-        form.style.display = 'none';
-        this.textContent = 'Ajouter une nouvelle catégorie';
+// Fermer modal quand user click kharj modal
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
     }
-});
+}
 </script>
 
 <?php require_once 'includes/footer.php'; ?> 
