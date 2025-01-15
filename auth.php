@@ -42,6 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } elseif ($loginResult['role'] === 'student') {
                 header('Location: student/index.php');
             }
+
+            // adding commits
+            
             exit();
         } else {
             // Ajouter un message d'erreur spécifique pour les comptes en attente
