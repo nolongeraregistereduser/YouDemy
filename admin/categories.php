@@ -133,12 +133,12 @@ require_once 'includes/sidebar.php';
     </div>
 
     <!-- Modal de modification -->
-    <div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal" id="editModal" style="display: none;">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Modifier la catégorie</h5>
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button type="button" class="close" onclick="closeEditModal()">
                         <span>&times;</span>
                     </button>
                 </div>
@@ -165,10 +165,16 @@ require_once 'includes/sidebar.php';
 <script>
 // Function dial edit category
 function editCategory(category) {
+    const modal = document.getElementById('editModal');
     document.getElementById('edit_id').value = category.id;
     document.getElementById('edit_name').value = category.name;
     document.getElementById('edit_description').value = category.description;
-    $('#editModal').modal('show');
+    modal.style.display = 'block';
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editModal');
+    modal.style.display = 'none';
 }
 
 // Show/Hide forms
