@@ -434,3 +434,78 @@ table tr:last-child td {
     font-weight: 500;
     text-decoration: none;
 }
+
+/* Styles pour la page users */
+.user-row.student {
+    background-color: #f8fafc;
+}
+
+.user-row.teacher {
+    background-color: #f0fdf4;
+}
+
+.role-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.role-badge.student {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.role-badge.teacher {
+    background: #f0fdf4;
+    color: #166534;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-badge.active {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-badge.suspended {
+    background: #fef2f2;
+    color: #991b1b;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-warning {
+    background: #f59e0b;
+    color: white;
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+}
+
+.btn-success {
+    background: #22c55e;
+    color: white;
+}
