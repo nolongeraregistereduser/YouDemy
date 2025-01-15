@@ -1,0 +1,16 @@
+#addCategoryForm {
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+} 

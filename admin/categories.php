@@ -68,8 +68,11 @@ require_once 'includes/sidebar.php';
         <div class="alert alert-danger"><?php echo $error; ?></div>
     <?php endif; ?>
 
+    <!-- Bouton pour afficher le form d'ajout -->
+    <button id="showAddForm" class="btn btn-primary mb-3">Ajouter une nouvelle catégorie</button>
+
     <!-- Formulaire d'ajout -->
-    <div class="card mb-4">
+    <div class="card mb-4" id="addCategoryForm" style="display: none;">
         <div class="card-header">
             <h2>Ajouter une catégorie</h2>
         </div>
@@ -160,12 +163,25 @@ require_once 'includes/sidebar.php';
 </div>
 
 <script>
+// Function dial edit category
 function editCategory(category) {
     document.getElementById('edit_id').value = category.id;
     document.getElementById('edit_name').value = category.name;
     document.getElementById('edit_description').value = category.description;
     $('#editModal').modal('show');
 }
+
+// Show/Hide forms
+document.getElementById('showAddForm').addEventListener('click', function() {
+    const form = document.getElementById('addCategoryForm');
+    if (form.style.display === 'none') {
+        form.style.display = 'block';
+        this.textContent = 'Masquer le formulaire';
+    } else {
+        form.style.display = 'none';
+        this.textContent = 'Ajouter une nouvelle catégorie';
+    }
+});
 </script>
 
 <?php require_once 'includes/footer.php'; ?> 
