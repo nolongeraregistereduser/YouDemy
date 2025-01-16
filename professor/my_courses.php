@@ -67,51 +67,43 @@ require_once 'includes/sidebar.php';
                     <div class="course-image">
                         <img src="<?php echo !empty($course['image_url']) ? '../' . $course['image_url'] : '../assets/images/course-placeholder.jpg'; ?>" 
                              alt="<?php echo htmlspecialchars($course['title']); ?>">
-                        <span class="status-badge <?php echo $course['status']; ?>">
+                        <div class="status-badge <?php echo $course['status']; ?>">
                             <?php echo ucfirst($course['status']); ?>
-                        </span>
+                        </div>
                     </div>
                     
                     <div class="course-info">
-                        <h3 class="course-title"><?php echo htmlspecialchars($course['title']); ?></h3>
-                        
-                        <p><?php echo htmlspecialchars(substr($course['description'], 0, 100)) . '...'; ?></p>
+                        <h3 class="course-title">
+                            <?php echo htmlspecialchars($course['title']); ?>
+                        </h3>
                         
                         <!-- Tags -->
+                        <?php if (!empty($course['tags'])): ?>
                         <div class="course-tags">
-                            <?php if(!empty($course['tags'])): ?>
-                                <?php foreach(explode(',', $course['tags']) as $tag): ?>
-                                    <span class="tag"><?php echo htmlspecialchars($tag); ?></span>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                            <?php foreach (explode(',', $course['tags']) as $tag): ?>
+                                <span class="tag"><?php echo htmlspecialchars($tag); ?></span>
+                            <?php endforeach; ?>
                         </div>
-                        
-                        <!-- Meta Information -->
-                        <div class="course-meta">
-                            <span class="course-date">
-                                <i class="fas fa-calendar"></i>
-                                <?php echo date('d M Y', strtotime($course['created_at'])); ?>
-                            </span>
-                            <span class="course-students">
-                                <i class="fas fa-users"></i>
-                                <?php echo $course['student_count'] ?? 0; ?>
-                            </span>
+                        <?php endif; ?>
+
+                        <!-- Students count -->
+                        <div class="students-count">
+                            <i class="fas fa-users"></i>
+                            <span><?php echo $course['student_count'] ?? 0; ?> étudiants</span>
                         </div>
-                    </div>
-                    
-                    <!-- Actions -->
-                    <div class="course-actions">
-                        <a href="edit_course.php?id=<?php echo $course['id']; ?>" class="btn btn-edit">
-                            <i class="fas fa-edit"></i>
-                            Modifier
-                        </a>
-                        <form method="POST" class="delete-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
-                            <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
-                            <button type="submit" name="delete_course" class="btn btn-delete">
-                                <i class="fas fa-trash"></i>
-                                Supprimer
-                            </button>
-                        </form>
+
+                        <!-- Actions -->
+                        <div class="course-actions">
+                            <a href="edit_course.php?id=<?php echo $course['id']; ?>" class="btn-edit">
+                                <i class="fas fa-edit"></i> Modifier
+                            </a>
+                            <form method="POST" class="delete-form" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');">
+                                <input type="hidden" name="course_id" value="<?php echo $course['id']; ?>">
+                                <button type="submit" name="delete_course" class="btn-delete">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
