@@ -12,7 +12,7 @@ class Teacher extends User {
     public function getDashboardData() {
         // Récupérer les cours créés par le professeur
         $query = "SELECT * FROM courses WHERE teacher_id = :teacher_id";
-        // ... implémentation ...
+        // ... implémentation pour la fonction pour la utiliser apres..
     }
     
     public function getPermissions() {
