@@ -82,72 +82,99 @@ require_once 'includes/sidebar.php';
 ?>
 
 <div class="main-content">
-    <div class="container">
-        <h1>Ajouter un nouveau cours</h1>
+    <div class="top-bar">
+        <div class="welcome">
+            <h2>Ajouter un nouveau cours</h2>
+            <p>Créez et publiez un nouveau cours pour vos étudiants</p>
+        </div>
+    </div>
 
+    <div class="content-wrapper">
         <?php if ($message): ?>
-            <div class="alert alert-success"><?php echo $message; ?></div>
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i>
+                <?php echo $message; ?>
+            </div>
         <?php endif; ?>
         
         <?php if ($error): ?>
-            <div class="alert alert-danger"><?php echo $error; ?></div>
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i>
+                <?php echo $error; ?>
+            </div>
         <?php endif; ?>
 
         <div class="card">
             <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" class="course-form">
                     <div class="form-group">
-                        <label>Titre</label>
-                        <input type="text" name="title" class="form-control" required>
+                        <label>Titre du cours</label>
+                        <input type="text" name="title" class="form-control" required 
+                               placeholder="Entrez le titre du cours">
                     </div>
 
                     <div class="form-group">
                         <label>Description</label>
-                        <textarea name="description" class="form-control" rows="3" required></textarea>
+                        <textarea name="description" class="form-control" rows="3" required
+                                  placeholder="Décrivez brièvement votre cours"></textarea>
                     </div>
 
                     <div class="form-group">
-                        <label>Contenu</label>
-                        <textarea name="content" class="form-control" rows="5" required></textarea>
+                        <label>Contenu détaillé</label>
+                        <textarea name="content" class="form-control" rows="5" required
+                                  placeholder="Détaillez le contenu de votre cours"></textarea>
                     </div>
 
-                    <div class="form-group">
-                        <label>Image du cours</label>
-                        <input type="file" name="image" class="form-control" accept="image/*">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Image du cours</label>
+                            <input type="file" name="image" class="form-control" accept="image/*">
+                            <small class="form-text">Format recommandé: JPG, PNG (max 2MB)</small>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Vidéo du cours</label>
+                            <input type="file" name="video" class="form-control" accept="video/*">
+                            <small class="form-text">Format recommandé: MP4, WEBM (max 100MB)</small>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Vidéo du cours</label>
-                        <input type="file" name="video" class="form-control" accept="video/*">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Catégorie</label>
+                            <select name="category_id" class="form-control" required>
+                                <option value="">Sélectionner une catégorie</option>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?php echo $cat['id']; ?>">
+                                        <?php echo htmlspecialchars($cat['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label>Tags</label>
+                            <select name="tags[]" class="form-control" multiple>
+                                <?php foreach ($tags as $t): ?>
+                                    <option value="<?php echo $t['id']; ?>">
+                                        <?php echo htmlspecialchars($t['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="form-text">Maintenez Ctrl pour sélectionner plusieurs tags</small>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Catégorie</label>
-                        <select name="category_id" class="form-control" required>
-                            <option value="">Sélectionner une catégorie</option>
-                            <?php foreach ($categories as $cat): ?>
-                                <option value="<?php echo $cat['id']; ?>">
-                                    <?php echo htmlspecialchars($cat['name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus-circle"></i>
+                            Ajouter le cours
+                        </button>
+                        <button type="reset" class="btn btn-secondary">
+                            <i class="fas fa-undo"></i>
+                            Réinitialiser
+                        </button>
                     </div>
-
-                    <div class="form-group">
-                        <label>Tags</label>
-                        <select name="tags[]" class="form-control" multiple>
-                            <?php foreach ($tags as $t): ?>
-                                <option value="<?php echo $t['id']; ?>">
-                                    <?php echo htmlspecialchars($t['name']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-plus-circle"></i>
-                        Ajouter le cours
-                    </button>
                 </form>
             </div>
         </div>

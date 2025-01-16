@@ -16,6 +16,11 @@ abstract class User {
         $this->conn = $db;
     }
     
+    // Ajouter setter pour ID
+    public function setId($id) {
+        $this->id = $id;
+    }
+    
     // Méthodes communes
     public function emailExists() {
         $query = "SELECT id FROM " . $this->table . " WHERE email = :email";
