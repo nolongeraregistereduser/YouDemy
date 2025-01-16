@@ -14,7 +14,7 @@ class Student extends User {
         $query = "SELECT c.* FROM courses c 
                  JOIN course_enrollments ce ON c.id = ce.course_id 
                  WHERE ce.student_id = :student_id";
-        // ... implémentation ...
+        // ... implémentation dial had function apres pOUR TRAVAILLER AVEC LE CONCEPT DE POLYMORPHISME...
     }
     
     public function getPermissions() {
