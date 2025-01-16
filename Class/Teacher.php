@@ -59,5 +59,44 @@ class Teacher extends User {
             'can_view_statistics' => true
         ];
     }
+    
+    public function getMyCourses() {
+        try {
+            $query = "SELECT * FROM courses WHERE teacher_id = :teacher_id ORDER BY created_at DESC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute(['teacher_id' => $this->id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+    
+    public function deleteCourse($courseId) {
+        try {
+            // Vérifier si le cours appartient à ce professeur
+            $query = "SELECT id FROM courses WHERE id = :course_id AND teacher_id = :teacher_id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute([
+                'course_id' => $courseId,
+                'teacher_id' => $this->id
+            ]);
+
+            if ($stmt->rowCount() === 0) {
+                return false;
+            }
+
+            // Supprimer le cours
+            $query = "DELETE FROM courses WHERE id = :course_id AND teacher_id = :teacher_id";
+            $stmt = $this->conn->prepare($query);
+            return $stmt->execute([
+                'course_id' => $courseId,
+                'teacher_id' => $this->id
+            ]);
+        } catch(PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
 } 
 
