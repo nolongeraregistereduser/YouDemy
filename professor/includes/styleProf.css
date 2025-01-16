@@ -553,6 +553,118 @@ td {
     }
 }
 
+/* Modern Input Styling */
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: var(--gray-800);
+}
+
+.form-control:hover {
+    border-color: var(--gray-300);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    outline: none;
+}
+
+/* Textarea Styling */
+textarea.form-control {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Select Styling */
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+/* Multiple Select Styling */
+select[multiple].form-control {
+    padding: 0.5rem;
+    background-image: none;
+    min-height: 150px;
+}
+
+select[multiple].form-control option {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+select[multiple].form-control option:checked {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* File Input Styling */
+input[type="file"].form-control {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+input[type="file"].form-control::file-selector-button {
+    padding: 0.5rem 1rem;
+    margin-right: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: var(--gray-100);
+    color: var(--gray-700);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+input[type="file"].form-control::file-selector-button:hover {
+    background-color: var(--gray-200);
+}
+
+/* Label Styling */
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 0.95rem;
+}
+
+/* Helper Text Styling */
+.form-text {
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+/* Focus Within Animation */
+.form-group:focus-within label {
+    color: var(--primary);
+}
+
+/* Placeholder Styling */
+.form-control::placeholder {
+    color: var(--gray-400);
+}
+
+/* Disabled State */
+.form-control:disabled {
+    background-color: var(--gray-50);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
 /*
 SAMARA
     
