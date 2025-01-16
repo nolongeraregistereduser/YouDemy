@@ -94,7 +94,7 @@ require_once 'includes/sidebar.php';
                             </span>
                             <span class="course-students">
                                 <i class="fas fa-users"></i>
-                                <?php echo $course['student_count'] ?? 0; ?> étudiants
+                                <?php echo $course['student_count'] ?? 0; ?>
                             </span>
                         </div>
                     </div>
