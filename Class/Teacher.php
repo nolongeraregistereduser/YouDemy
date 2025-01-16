@@ -62,7 +62,18 @@ class Teacher extends User {
     
     public function getMyCourses() {
         try {
-            $query = "SELECT * FROM courses WHERE teacher_id = :teacher_id ORDER BY created_at DESC";
+            // Updated query to include tags and student count
+            $query = "SELECT c.*, 
+                        GROUP_CONCAT(t.name) as tags,
+                        COUNT(DISTINCT e.student_id) as student_count
+                     FROM courses c
+                     LEFT JOIN course_tags ct ON c.id = ct.course_id
+                     LEFT JOIN tags t ON ct.tag_id = t.id
+                     LEFT JOIN enrollments e ON c.id = e.course_id
+                     WHERE c.teacher_id = :teacher_id 
+                     GROUP BY c.id
+                     ORDER BY c.created_at DESC";
+                     
             $stmt = $this->conn->prepare($query);
             $stmt->execute(['teacher_id' => $this->id]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
