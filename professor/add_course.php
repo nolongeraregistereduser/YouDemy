@@ -24,6 +24,12 @@ $tags = $tag->getAll();
 $message = '';
 $error = '';
 
+// Pour le sidebar actif
+$page = 'add_course';
+
+// Pour les informations de l'utilisateur dans le sidebar
+$user = $_SESSION['user'];
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Traitement upload image
     $image_url = '';
@@ -72,72 +78,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 require_once 'includes/header.php';
+require_once 'includes/sidebar.php';
 ?>
 
 <div class="main-content">
-    <h1>Ajouter un nouveau cours</h1>
+    <div class="container">
+        <h1>Ajouter un nouveau cours</h1>
 
-    <?php if ($message): ?>
-        <div class="alert alert-success"><?php echo $message; ?></div>
-    <?php endif; ?>
-    
-    <?php if ($error): ?>
-        <div class="alert alert-danger"><?php echo $error; ?></div>
-    <?php endif; ?>
+        <?php if ($message): ?>
+            <div class="alert alert-success"><?php echo $message; ?></div>
+        <?php endif; ?>
+        
+        <?php if ($error): ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php endif; ?>
 
-    <div class="card">
-        <div class="card-body">
-            <form method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>Titre</label>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Titre</label>
+                        <input type="text" name="title" class="form-control" required>
+                    </div>
 
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea name="description" class="form-control" rows="3" required></textarea>
-                </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" class="form-control" rows="3" required></textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label>Contenu</label>
-                    <textarea name="content" class="form-control" rows="5" required></textarea>
-                </div>
+                    <div class="form-group">
+                        <label>Contenu</label>
+                        <textarea name="content" class="form-control" rows="5" required></textarea>
+                    </div>
 
-                <div class="form-group">
-                    <label>Image du cours</label>
-                    <input type="file" name="image" class="form-control" accept="image/*">
-                </div>
+                    <div class="form-group">
+                        <label>Image du cours</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                    </div>
 
-                <div class="form-group">
-                    <label>Vidéo du cours</label>
-                    <input type="file" name="video" class="form-control" accept="video/*">
-                </div>
+                    <div class="form-group">
+                        <label>Vidéo du cours</label>
+                        <input type="file" name="video" class="form-control" accept="video/*">
+                    </div>
 
-                <div class="form-group">
-                    <label>Catégorie</label>
-                    <select name="category_id" class="form-control" required>
-                        <option value="">Sélectionner une catégorie</option>
-                        <?php foreach ($categories as $cat): ?>
-                            <option value="<?php echo $cat['id']; ?>">
-                                <?php echo htmlspecialchars($cat['name']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select name="category_id" class="form-control" required>
+                            <option value="">Sélectionner une catégorie</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?php echo $cat['id']; ?>">
+                                    <?php echo htmlspecialchars($cat['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label>Tags</label>
-                    <select name="tags[]" class="form-control" multiple>
-                        <?php foreach ($tags as $t): ?>
-                            <option value="<?php echo $t['id']; ?>">
-                                <?php echo htmlspecialchars($t['name']); ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <select name="tags[]" class="form-control" multiple>
+                            <?php foreach ($tags as $t): ?>
+                                <option value="<?php echo $t['id']; ?>">
+                                    <?php echo htmlspecialchars($t['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Ajouter le cours</button>
-            </form>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i>
+                        Ajouter le cours
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
