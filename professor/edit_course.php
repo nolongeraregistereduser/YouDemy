@@ -5,6 +5,7 @@ require_once '../Class/User.php';
 require_once '../Class/Teacher.php';
 require_once '../Class/Course.php';
 require_once '../Class/Tag.php';
+require_once '../Class/Category.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'teacher') {
     header('Location: ../auth.php');
@@ -23,6 +24,7 @@ $teacher->setId($_SESSION['user']['id']);
 
 $course = new Course($pdo);
 $tag = new Tag($pdo);
+$category = new Category($pdo);
 
 // Get course ID from URL
 $courseId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -36,15 +38,21 @@ if (!$courseDetails || $courseDetails['teacher_id'] != $_SESSION['user']['id']) 
     exit();
 }
 
+// Get all categories
+$categories = $category->getAll();
+
 // Get all available tags
 $allTags = $tag->getAll();
+
+// Get current course tags
+$courseTags = !empty($courseDetails['tag_ids']) ? explode(',', $courseDetails['tag_ids']) : [];
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
         'title' => $_POST['title'],
-        'description' => $_POST['description'],
-        'content' => $_POST['content'],
+        'description' => trim($_POST['description']),
+        'content' => trim($_POST['content']),
         'category_id' => $_POST['category_id'],
         'status' => $_POST['status'],
         'teacher_id' => $_SESSION['user']['id']
@@ -53,6 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle image upload if new image is provided
     if (!empty($_FILES['image']['name'])) {
         $uploadDir = '../uploads/courses/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        
         $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $fileName;
 
@@ -79,14 +91,10 @@ require_once 'includes/header.php';
 ?>
 
 <div class="dashboard">
-    <?php 
-    require_once 'includes/sidebar.php';
-    ?>
+    <?php require_once 'includes/sidebar.php'; ?>
     
     <div class="main-content">
-        <?php 
-        require_once 'includes/navbar.php';
-        ?>
+        <?php require_once 'includes/navbar.php'; ?>
 
         <?php if (isset($error_message)): ?>
             <div class="alert alert-danger">
@@ -104,16 +112,12 @@ require_once 'includes/header.php';
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" class="form-control" rows="4" required>
-                        <?php echo htmlspecialchars($courseDetails['description']); ?>
-                    </textarea>
+                    <textarea id="description" name="description" class="form-control" rows="4" required><?php echo htmlspecialchars($courseDetails['description']); ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="content">Contenu</label>
-                    <textarea id="content" name="content" class="form-control" rows="8" required>
-                        <?php echo htmlspecialchars($courseDetails['content']); ?>
-                    </textarea>
+                    <textarea id="content" name="content" class="form-control" rows="8" required><?php echo htmlspecialchars($courseDetails['content']); ?></textarea>
                 </div>
 
                 <div class="form-group">
