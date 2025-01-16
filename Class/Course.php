@@ -122,4 +122,17 @@ class Course {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute([':course_id' => $courseId]);
     }
+
+    public function getById($id) {
+        $query = "SELECT c.*, GROUP_CONCAT(t.id) as tag_ids 
+                  FROM " . $this->table . " c
+                  LEFT JOIN course_tags ct ON c.id = ct.course_id
+                  LEFT JOIN tags t ON ct.tag_id = t.id
+                  WHERE c.id = :id
+                  GROUP BY c.id";
+                  
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 } 
