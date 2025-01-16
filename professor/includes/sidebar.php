@@ -16,7 +16,7 @@
             <i class="fas fa-th-large"></i>
             <span>Dashboard</span>
         </a>
-        <a href="courses.php" class="nav-item <?php echo $page === 'courses' ? 'active' : ''; ?>">
+        <a href="my_courses.php" class="nav-item <?php echo $page === 'courses' ? 'active' : ''; ?>">
             <i class="fas fa-book"></i>
             <span>My Courses</span>
         </a>
