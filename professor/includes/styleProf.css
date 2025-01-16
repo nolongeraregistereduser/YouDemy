@@ -33,18 +33,21 @@ body {
 .dashboard {
     display: flex;
     min-height: 100vh;
+    width: 100%;
+    background: #f8fafc;
+    position: relative;
 }
 
 /* Sidebar */
 .sidebar {
-    width: 280px;
-    background-color: white;
-    border-right: 1px solid var(--gray-200);
-    padding: 2rem;
+    width: 260px;
     position: fixed;
+    left: 0;
+    top: 0;
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    background: white;
+    border-right: 1px solid var(--gray-200);
+    z-index: 10;
 }
 
 .logo h1 {
@@ -120,9 +123,12 @@ body {
 
 /* Main Content */
 .main-content {
-    margin-left: 280px;
-    padding: 2rem;
-    flex-grow: 1;
+    flex: 1;
+    min-height: 100vh;
+    margin-left: 260px; /* Width of sidebar */
+    width: calc(100% - 260px);
+    padding: 20px;
+    background: #f8fafc;
 }
 
 /* Top Bar */
@@ -130,11 +136,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem;
+    padding: 1rem 2rem;
+    margin-bottom: 1rem;
     background: white;
-    border-radius: 15px;
-    margin: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .welcome h2 {
@@ -961,7 +967,9 @@ input[type="file"].form-control::file-selector-button:hover {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    margin: 1.5rem;
+    margin: 1rem;
+    height: calc(100vh - 140px); /* Adjust for top bar and padding */
+    overflow-y: auto;
 }
 
 .form-group {
