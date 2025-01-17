@@ -4,10 +4,12 @@
    Course Listings
   </title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
    <link rel="stylesheet" href="includes/styleStudent.css">
  </head>
  <body>
+  <?php include 'includes/navbar.php'; ?>
+  
   <div class="container">
    <div class="category-tabs">
     <div class="category-tab active">
@@ -124,5 +126,7 @@
     Afficher tous les cours de la catégorie Science des données
    </a>
   </div>
+
+  <?php include 'includes/footer.php'; ?>
  </body>
 </html>
