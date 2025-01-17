@@ -1,0 +1,85 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.top-banner {
+    background-color: #5624d0;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.header .logo {
+    display: flex;
+    align-items: center;
+}
+.header .logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+.header .search-bar {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}
+.header .search-bar input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 14px;
+}
+.header .search-bar .fa-search {
+    margin-left: -30px;
+    color: #9e9e9e;
+}
+.header .nav-links {
+    display: flex;
+    align-items: center;
+}
+.header .nav-links a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+.header .nav-links .fa-shopping-cart {
+    font-size: 18px;
+}
+.header .buttons {
+    display: flex;
+    align-items: center;
+}
+.header .buttons button {
+    margin: 0 5px;
+    padding: 10px 20px;
+    border: 1px solid #5624d0;
+    border-radius: 20px;
+    background-color: white;
+    color: #5624d0;
+    font-size: 14px;
+    cursor: pointer;
+}
+.header .buttons button.primary {
+    background-color: #5624d0;
+    color: white;
+}
+.header .buttons .fa-globe {
+    font-size: 18px;
+    color: #333;
+}
+.header .logo a {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #333;
+    text-decoration: none;
+}
