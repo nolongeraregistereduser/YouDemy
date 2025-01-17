@@ -135,4 +135,36 @@ class Course {
         $stmt->execute([':id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function getAllPublished($categoryId = null, $searchQuery = '') {
+        $query = "SELECT c.*, 
+                         u.firstname as teacher_firstname, 
+                         u.lastname as teacher_lastname,
+                         CONCAT(u.firstname, ' ', u.lastname) as teacher_name,
+                         COUNT(DISTINCT e.student_id) as enrollment_count
+                  FROM courses c
+                  LEFT JOIN users u ON c.teacher_id = u.id
+                  LEFT JOIN enrollments e ON c.id = e.course_id
+                  WHERE c.status = 'published'";
+        
+        $params = [];
+        
+        if ($categoryId) {
+            $query .= " AND c.category_id = :category_id";
+            $params[':category_id'] = $categoryId;
+        }
+        
+        if ($searchQuery) {
+            $query .= " AND (c.title LIKE :search 
+                            OR c.description LIKE :search 
+                            OR CONCAT(u.firstname, ' ', u.lastname) LIKE :search)";
+            $params[':search'] = "%$searchQuery%";
+        }
+        
+        $query .= " GROUP BY c.id ORDER BY enrollment_count DESC";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 } 

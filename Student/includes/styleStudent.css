@@ -581,3 +581,117 @@ body {
         padding: 20px;
     }
 }
+
+/* Courses Page Specific Styles */
+.courses-header {
+    background: linear-gradient(45deg, #5624d0, #7854f7);
+    color: white;
+    padding: 60px 0;
+}
+
+.courses-header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.courses-header h1 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.courses-header p {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+.courses-filters {
+    margin-top: 30px;
+}
+
+.search-filter-form {
+    display: flex;
+    gap: 20px;
+    max-width: 800px;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    background: white;
+}
+
+.search-box button {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #5624d0;
+    cursor: pointer;
+}
+
+.category-filter {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    background: white;
+    color: #1c1d1f;
+    cursor: pointer;
+    min-width: 200px;
+}
+
+.courses-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.no-courses {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6a6f73;
+}
+
+.no-courses i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #5624d0;
+}
+
+.no-courses h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #1c1d1f;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-filter-form {
+        flex-direction: column;
+    }
+    
+    .category-filter {
+        width: 100%;
+    }
+    
+    .courses-header h1 {
+        font-size: 28px;
+    }
+    
+    .courses-header p {
+        font-size: 16px;
+    }
+}
