@@ -156,12 +156,12 @@ class Course {
         
         $params = [];
         
-        if ($categoryId) {
+        if (!is_null($categoryId) && $categoryId > 0) {
             $query .= " AND c.category_id = :category_id";
             $params[':category_id'] = $categoryId;
         }
         
-        if ($searchQuery) {
+        if (!empty($searchQuery)) {
             $query .= " AND (c.title LIKE :search 
                             OR c.description LIKE :search 
                             OR CONCAT(u.firstname, ' ', u.lastname) LIKE :search
@@ -171,8 +171,14 @@ class Course {
         
         $query .= " GROUP BY c.id ORDER BY enrollment_count DESC";
         
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log error or handle it appropriately
+            error_log("Error in getAllPublished: " . $e->getMessage());
+            return [];
+        }
     }
 } 

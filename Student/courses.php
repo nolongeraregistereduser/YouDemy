@@ -14,11 +14,12 @@ $categoryObj = new Category($db);
 // Get all categories for the filter
 $categories = $categoryObj->getAll();
 
-// Get filter parameters
-$categoryId = isset($_GET['category']) ? $_GET['category'] : null;
-$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+// Get filter parameters and ensure categoryId is an integer or null
+$categoryId = isset($_GET['category']) && !empty($_GET['category']) ? 
+    (int)$_GET['category'] : null;
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
 
-// Get courses based on filters (you'll need to add this method to your Course class)
+// Get courses based on filters
 $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
 ?>
 
@@ -51,7 +52,7 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                         </button>
                     </div>
                     
-                    <select name="category" class="category-filter">
+                    <select name="category" class="category-filter" onchange="this.form.submit()">
                         <option value="">Toutes les catégories</option>
                         <?php foreach($categories as $category): ?>
                             <option value="<?php echo $category['id']; ?>" 
