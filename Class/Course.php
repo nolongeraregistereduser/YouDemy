@@ -142,7 +142,11 @@ class Course {
                          u.lastname as teacher_lastname,
                          CONCAT(u.firstname, ' ', u.lastname) as teacher_name,
                          COUNT(DISTINCT e.student_id) as enrollment_count,
-                         GROUP_CONCAT(DISTINCT t.name) as tags
+                         GROUP_CONCAT(DISTINCT t.name) as tags,
+                         CASE 
+                            WHEN c.image_url LIKE 'http%' THEN c.image_url 
+                            ELSE CONCAT('/uploads/', c.image_url)
+                         END as image_url
                   FROM courses c
                   LEFT JOIN users u ON c.teacher_id = u.id
                   LEFT JOIN enrollments e ON c.id = e.course_id
