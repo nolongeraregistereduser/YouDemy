@@ -3,7 +3,7 @@
     <title>YouDemy Header</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="includes/styleStudent.css">
+    <link rel="stylesheet" href="styleStudent.css">
 </head>
 <body>
     <div class="top-banner">
