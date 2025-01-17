@@ -86,6 +86,16 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                                 <i class="fas fa-chalkboard-teacher"></i>
                                 <?php echo htmlspecialchars($course['teacher_name']); ?>
                             </div>
+                            
+                            <!-- Tags Section -->
+                            <?php if(!empty($course['tags'])): ?>
+                                <div class="course-tags">
+                                    <?php foreach(explode(',', $course['tags']) as $tag): ?>
+                                        <span class="tag"><?php echo htmlspecialchars(trim($tag)); ?></span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+
                             <div class="course-stats">
                                 <span class="enrollment-count">
                                     <i class="fas fa-users"></i>

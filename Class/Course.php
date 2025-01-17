@@ -141,10 +141,13 @@ class Course {
                          u.firstname as teacher_firstname, 
                          u.lastname as teacher_lastname,
                          CONCAT(u.firstname, ' ', u.lastname) as teacher_name,
-                         COUNT(DISTINCT e.student_id) as enrollment_count
+                         COUNT(DISTINCT e.student_id) as enrollment_count,
+                         GROUP_CONCAT(DISTINCT t.name) as tags
                   FROM courses c
                   LEFT JOIN users u ON c.teacher_id = u.id
                   LEFT JOIN enrollments e ON c.id = e.course_id
+                  LEFT JOIN course_tags ct ON c.id = ct.course_id
+                  LEFT JOIN tags t ON ct.tag_id = t.id
                   WHERE c.status = 'published'";
         
         $params = [];
@@ -157,7 +160,8 @@ class Course {
         if ($searchQuery) {
             $query .= " AND (c.title LIKE :search 
                             OR c.description LIKE :search 
-                            OR CONCAT(u.firstname, ' ', u.lastname) LIKE :search)";
+                            OR CONCAT(u.firstname, ' ', u.lastname) LIKE :search
+                            OR t.name LIKE :search)";
             $params[':search'] = "%$searchQuery%";
         }
         
