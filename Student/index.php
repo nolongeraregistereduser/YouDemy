@@ -5,11 +5,95 @@
   </title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
    <link rel="stylesheet" href="includes/styleStudent.css">
  </head>
  <body>
   <?php include 'includes/navbar.php'; ?>
   
+  <!-- New Hero Section -->
+  <div class="hero-container">
+   <div class="text-content">
+    <h1>Apprenez de nouvelles compétences en ligne avec YouDemy</h1>
+    <p>Découvrez des milliers de cours enseignés par des experts de l'industrie. Commencez votre parcours d'apprentissage dès aujourd'hui.</p>
+    <a href="#">Commencer maintenant</a>
+   </div>
+   <div class="image-content">
+    <img src="https://storage.googleapis.com/a1aa/image/online-learning-illustration.jpg" alt="Online Learning">
+   </div>
+  </div>
+
+  <div class="learning-goals-section">
+    <div class="learning-goals-container">
+        <div class="left-section">
+            <h2 class="section-title">Pourquoi choisir YouDemy ?</h2>
+            
+            <div class="feature-card">
+                <div class="card-title">
+                    <i class="fas fa-laptop-code"></i>
+                    Apprentissage Interactif
+                </div>
+                <div class="card-content">
+                    Développez vos compétences avec des cours vidéo de haute qualité, des exercices pratiques et des projets réels guidés par des experts de l'industrie.
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-title">
+                    <i class="fas fa-certificate"></i>
+                    Certificats Reconnus
+                </div>
+                <div class="card-content">
+                    Obtenez des certificats validés par l'industrie pour booster votre CV et votre carrière professionnelle.
+                </div>
+                <a class="card-link" href="#">
+                    Découvrir les cours <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-title">
+                    <i class="fas fa-chart-line"></i>
+                    Suivi Personnalisé
+                    <span class="premium-badge">Premium</span>
+                </div>
+                <div class="card-content">
+                    Suivez votre progression et recevez des recommandations personnalisées basées sur vos objectifs d'apprentissage.
+                </div>
+                <a class="card-link" href="#">
+                    En savoir plus <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-title">
+                    <i class="fas fa-users"></i>
+                    Communauté Active
+                    <span class="premium-badge">Premium</span>
+                </div>
+                <div class="card-content">
+                    Rejoignez une communauté dynamique d'apprenants et d'experts. Participez à des forums de discussion et des sessions de mentorat.
+                </div>
+                <a class="card-link" href="#">
+                    Rejoindre <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="preview-container">
+                <div class="preview-header">
+                    <div class="title">Aperçu d'un cours</div>
+                </div>
+                <div class="preview-content">
+                    <img src="https://storage.googleapis.com/a1aa/image/QswWHTWh8p5qDAtfFvOoZ4-hk3ChPuV2dck6qEk9me8.jpg" 
+                         alt="Exemple de cours YouDemy" />
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <div class="container">
    <div class="category-tabs">
     <div class="category-tab active">

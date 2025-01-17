@@ -261,3 +261,242 @@ body {
                   width: 100%;
               }
           }
+
+/* Hero Section Styles */
+.hero-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
+}
+
+.text-content {
+    max-width: 50%;
+}
+
+.text-content h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.text-content p {
+    font-size: 1.1em;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.text-content a {
+    display: inline-block;
+    padding: 15px 30px;
+    font-size: 1em;
+    color: #5624d0;
+    border: 2px solid #5624d0;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.text-content a:hover {
+    background-color: #5624d0;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.image-content {
+    max-width: 50%;
+}
+
+.image-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+/* Update existing container styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .text-content, 
+    .image-content {
+        max-width: 100%;
+    }
+
+    .text-content h1 {
+        font-size: 2em;
+    }
+
+    .text-content p {
+        font-size: 1em;
+    }
+}
+
+/* Learning Goals Section Styles */
+.learning-goals-section {
+    background-color: #fff;
+    padding: 80px 0;
+    margin: 40px 0;
+}
+
+.learning-goals-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 60px;
+    padding: 0 20px;
+}
+
+.learning-goals-container .left-section {
+    flex: 1;
+    max-width: 600px;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: #1c1d1f;
+    margin-bottom: 40px;
+}
+
+.feature-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #5624d0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(86, 36, 208, 0.1);
+}
+
+.feature-card .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1c1d1f;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feature-card .card-title i {
+    color: #5624d0;
+    font-size: 20px;
+}
+
+.feature-card .card-content {
+    font-size: 15px;
+    color: #6a6f73;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.card-link {
+    color: #5624d0;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.card-link:hover {
+    color: #401b9c;
+}
+
+.card-link i {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+}
+
+.card-link:hover i {
+    transform: translateX(4px);
+}
+
+.premium-badge {
+    background: linear-gradient(45deg, #5624d0, #7854f7);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: 10px;
+    font-weight: 500;
+}
+
+.right-section {
+    flex: 1;
+    max-width: 500px;
+}
+
+.preview-container {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.preview-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.preview-header .title {
+    font-weight: 600;
+    color: #1c1d1f;
+}
+
+.preview-content img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    .learning-goals-container {
+        flex-direction: column;
+    }
+
+    .learning-goals-container .left-section,
+    .learning-goals-container .right-section {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 24px;
+    }
+
+    .feature-card {
+        padding: 20px;
+    }
+}
