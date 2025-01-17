@@ -18,7 +18,7 @@
             <i class="fas fa-search"></i>
         </div>
         <div class="nav-links">
-            <a href="#">Udemy Business</a>
+            <a href="#">Discover Courses</a>
             <a href="#">Enseigner sur Udemy</a>
             <a href="#"><i class="fas fa-shopping-cart"></i></a>
         </div>

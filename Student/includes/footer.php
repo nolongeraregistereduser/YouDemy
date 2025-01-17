@@ -11,11 +11,11 @@
    <div class="logo">
     <img alt="Udemy logo" height="20" src="https://storage.googleapis.com/a1aa/image/KQGhToq8pmZlqpG6KmxVQ7utvMovYMFlj9h8k_yxe_M.jpg" width="20"/>
     <span>
-     udemy
+     Learn with YouDemy
     </span>
    </div>
    <div class="center-text">
-    © 2025 Udemy, Inc.
+    © 2025 YouDemy.
    </div>
    <div class="right-section">
     <a href="#">
