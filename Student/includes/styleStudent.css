@@ -155,3 +155,109 @@ body {
      .footer .right-section i {
          margin-right: 5px;
      }
+
+
+    
+     body {
+              font-family: 'Roboto', sans-serif;
+              background-color: #f8f9fa;
+              margin: 0;
+              padding: 0;
+          }
+          .container {
+              width: 90%;
+              margin: 0 auto;
+              padding: 20px 0;
+          }
+          .category-tabs {
+              display: flex;
+              gap: 10px;
+              margin-bottom: 20px;
+          }
+          .category-tab {
+              background-color: #f1f3f5;
+              border-radius: 20px;
+              padding: 10px 20px;
+              font-size: 14px;
+              color: #495057;
+              cursor: pointer;
+          }
+          .category-tab.active {
+              background-color: #343a40;
+              color: #fff;
+          }
+          .course-list {
+              display: flex;
+              gap: 20px;
+              flex-wrap: wrap;
+          }
+          .course-card {
+              background-color: #fff;
+              border: 1px solid #dee2e6;
+              border-radius: 8px;
+              width: calc(25% - 20px);
+              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              overflow: hidden;
+          }
+          .course-card img {
+              width: 100%;
+              height: auto;
+          }
+          .course-content {
+              padding: 15px;
+          }
+          .course-title {
+              font-size: 16px;
+              font-weight: 500;
+              margin: 0 0 10px;
+          }
+          .course-author {
+              font-size: 14px;
+              color: #6c757d;
+              margin: 0 0 10px;
+          }
+          .course-badge {
+              display: inline-block;
+              background-color: #e9ecef;
+              color: #495057;
+              font-size: 12px;
+              padding: 5px 10px;
+              border-radius: 20px;
+              margin-bottom: 10px;
+          }
+          .enroll-btn {
+              display: block;
+              width: 100%;
+              text-align: center;
+              padding: 10px 0;
+              margin-top: 10px;
+              background-color: #007bff;
+              color: #fff;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              font-size: 14px;
+              text-decoration: none;
+          }
+          .view-all-btn {
+              display: block;
+              width: 100%;
+              text-align: center;
+              padding: 10px 0;
+              margin-top: 20px;
+              border: 1px solid #6c757d;
+              border-radius: 5px;
+              color: #6c757d;
+              text-decoration: none;
+              font-size: 14px;
+          }
+          @media (max-width: 768px) {
+              .course-card {
+                  width: calc(50% - 20px);
+              }
+          }
+          @media (max-width: 480px) {
+              .course-card {
+                  width: 100%;
+              }
+          }
