@@ -145,7 +145,7 @@ class Course {
                          GROUP_CONCAT(DISTINCT t.name) as tags,
                          CASE 
                             WHEN c.image_url LIKE 'http%' THEN c.image_url 
-                            ELSE CONCAT('/uploads/', c.image_url)
+                            ELSE CONCAT('/Youdemy/', c.image_url)
                          END as image_url
                   FROM courses c
                   LEFT JOIN users u ON c.teacher_id = u.id
