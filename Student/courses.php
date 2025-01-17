@@ -73,7 +73,7 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                 <p>Essayez de modifier vos filtres ou effectuez une nouvelle recherche.</p>
             </div>
         <?php else: ?>
-            <div class="course-grid">
+            <div class="course-list">
                 <?php foreach($courses as $course): ?>
                     <div class="course-card">
                         <img src="<?php echo htmlspecialchars($course['image_url']); ?>" 
@@ -83,11 +83,18 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                                 <?php echo htmlspecialchars($course['title']); ?>
                             </div>
                             <div class="course-author">
+                                <i class="fas fa-chalkboard-teacher"></i>
                                 <?php echo htmlspecialchars($course['teacher_name']); ?>
                             </div>
-                            <?php if(isset($course['badge'])): ?>
+                            <div class="course-stats">
+                                <span class="enrollment-count">
+                                    <i class="fas fa-users"></i>
+                                    <?php echo number_format($course['enrollment_count']); ?> étudiants
+                                </span>
+                            </div>
+                            <?php if($course['enrollment_count'] > 1000): ?>
                                 <div class="course-badge">
-                                    <?php echo htmlspecialchars($course['badge']); ?>
+                                    Meilleure vente
                                 </div>
                             <?php endif; ?>
                             <a class="enroll-btn" href="course-details.php?id=<?php echo $course['id']; ?>">

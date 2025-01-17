@@ -189,7 +189,7 @@ body {
           .course-list {
               display: grid;
               grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-              gap: 25px;
+              gap: 30px;
               margin: 40px 0;
           }
           .course-card {
@@ -202,7 +202,7 @@ body {
           }
           .course-card:hover {
               transform: translateY(-5px);
-              box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+              box-shadow: 0 10px 20px rgba(86, 36, 208, 0.1);
               border-color: #5624d0;
           }
           .course-card img {
@@ -222,7 +222,7 @@ body {
               font-size: 16px;
               font-weight: 600;
               color: #1c1d1f;
-              margin-bottom: 10px;
+              margin-bottom: 12px;
               line-height: 1.4;
               display: -webkit-box;
               -webkit-line-clamp: 2;
@@ -233,6 +233,28 @@ body {
               font-size: 14px;
               color: #6a6f73;
               margin-bottom: 12px;
+              display: flex;
+              align-items: center;
+              gap: 6px;
+          }
+          .course-author i {
+              color: #5624d0;
+          }
+          .course-stats {
+              display: flex;
+              align-items: center;
+              gap: 15px;
+              margin-bottom: 15px;
+              font-size: 13px;
+              color: #1c1d1f;
+          }
+          .enrollment-count {
+              display: flex;
+              align-items: center;
+              gap: 5px;
+          }
+          .enrollment-count i {
+              color: #5624d0;
           }
           .course-badge {
               position: absolute;
