@@ -136,5 +136,18 @@ class Teacher extends User {
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$enrollmentId, $this->id]);
     }
+
+    public function getPendingEnrollmentsCount() {
+        $query = "SELECT COUNT(*) as count
+                  FROM enrollments e
+                  JOIN courses c ON e.course_id = c.id
+                  WHERE c.teacher_id = ? AND e.status = 'pending'";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        return $result['count'] ?? 0;
+    }
 } 
 

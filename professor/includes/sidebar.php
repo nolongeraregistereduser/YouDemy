@@ -1,3 +1,11 @@
+<?php
+// Add this at the top of the file
+$pendingCount = 0;
+if (isset($teacher)) {
+    $pendingCount = $teacher->getPendingEnrollmentsCount();
+}
+?>
+
 <aside class="sidebar">
     <div class="logo">
         <h1>Youdemy</h1>
