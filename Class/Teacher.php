@@ -13,41 +13,46 @@ class Teacher extends User {
             $stats = [];
             
             // Total courses
-            $query = "SELECT COUNT(*) as total_courses FROM courses WHERE teacher_id = :teacher_id";
+            $query = "SELECT COUNT(*) as total_courses FROM courses WHERE teacher_id = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute(['teacher_id' => $this->id]);
+            $stmt->execute([$this->id]);
             $stats['total_courses'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_courses'];
             
             // Total students enrolled
-            $query = "SELECT COUNT(DISTINCT user_id) as total_students 
-                     FROM course_enrollments ce 
-                     JOIN courses c ON ce.course_id = c.id 
-                     WHERE c.teacher_id = :teacher_id";
+            $query = "SELECT COUNT(DISTINCT e.student_id) as total_students 
+                     FROM enrollments e 
+                     JOIN courses c ON e.course_id = c.id 
+                     WHERE c.teacher_id = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute(['teacher_id' => $this->id]);
+            $stmt->execute([$this->id]);
             $stats['total_students'] = $stmt->fetch(PDO::FETCH_ASSOC)['total_students'];
             
             // Recent courses
-            $query = "SELECT * FROM courses 
-                     WHERE teacher_id = :teacher_id 
-                     ORDER BY created_at DESC LIMIT 5";
+            $query = "SELECT c.*, 
+                            CASE 
+                                WHEN c.image_url LIKE 'http%' THEN c.image_url 
+                                ELSE CONCAT('uploads/', c.image_url)
+                            END as image_url
+                     FROM courses c 
+                     WHERE c.teacher_id = ? 
+                     ORDER BY c.created_at DESC LIMIT 5";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute(['teacher_id' => $this->id]);
+            $stmt->execute([$this->id]);
             $stats['recent_courses'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             // Course status counts
             $query = "SELECT status, COUNT(*) as count 
                      FROM courses 
-                     WHERE teacher_id = :teacher_id 
+                     WHERE teacher_id = ? 
                      GROUP BY status";
             $stmt = $this->conn->prepare($query);
-            $stmt->execute(['teacher_id' => $this->id]);
+            $stmt->execute([$this->id]);
             $stats['course_status'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
             
             return $stats;
             
         } catch(PDOException $e) {
-            error_log($e->getMessage());
+            error_log("Teacher Dashboard Error: " . $e->getMessage());
             return false;
         }
     }
