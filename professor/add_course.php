@@ -44,16 +44,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Traitement upload video
-    $video_url = '';
-    if (isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
+    // Initialize content URL
+    $content_url = '';
+    $content_type = $_POST['content_type'];
+
+    // Handle content upload based on type
+    if ($content_type === 'video' && isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
         $allowed = ['mp4', 'webm'];
         $filename = $_FILES['video']['name'];
         $filetype = pathinfo($filename, PATHINFO_EXTENSION);
         
         if (in_array(strtolower($filetype), $allowed)) {
-            $video_url = 'uploads/' . uniqid() . '.' . $filetype;
-            move_uploaded_file($_FILES['video']['tmp_name'], '../' . $video_url);
+            $content_url = 'uploads/' . uniqid() . '.' . $filetype;
+            move_uploaded_file($_FILES['video']['tmp_name'], '../' . $content_url);
+        }
+    } elseif ($content_type === 'document' && isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
+        $allowed = ['pdf', 'doc', 'docx'];
+        $filename = $_FILES['document']['name'];
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        
+        if (in_array(strtolower($filetype), $allowed)) {
+            $content_url = 'uploads/' . uniqid() . '.' . $filetype;
+            move_uploaded_file($_FILES['document']['tmp_name'], '../' . $content_url);
         }
     }
 
@@ -63,7 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'description' => $_POST['description'],
             'content' => $_POST['content'],
             'image_url' => $image_url,
-            'video_url' => $video_url,
+            'content_url' => $content_url,
+            'content_type' => $content_type,
             'teacher_id' => $_SESSION['user']['id'],
             'category_id' => $_POST['category_id'],
             'tags' => isset($_POST['tags']) ? $_POST['tags'] : []
@@ -71,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($course->create($courseData)) {
             $message = "Cours ajouté avec succès";
+            header('Location: index.php');
+            exit();
         }
     } catch(PDOException $e) {
         $error = "Erreur lors de l'ajout du cours: " . $e->getMessage();
@@ -120,9 +135,12 @@ require_once 'includes/sidebar.php';
                     </div>
 
                     <div class="form-group">
-                        <label>Contenu détaillé</label>
-                        <textarea name="content" class="form-control" rows="5" required
-                                  placeholder="Détaillez le contenu de votre cours"></textarea>
+                        <label>Type de contenu</label>
+                        <select name="content_type" id="content_type" class="form-control" required onchange="toggleContentUpload()">
+                            <option value="">Sélectionner le type de contenu</option>
+                            <option value="video">Vidéo</option>
+                            <option value="document">Document (PDF)</option>
+                        </select>
                     </div>
 
                     <div class="form-row">
@@ -132,10 +150,16 @@ require_once 'includes/sidebar.php';
                             <small class="form-text">Format recommandé: JPG, PNG (max 2MB)</small>
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6" id="video_upload" style="display: none;">
                             <label>Vidéo du cours</label>
                             <input type="file" name="video" class="form-control" accept="video/*">
                             <small class="form-text">Format recommandé: MP4, WEBM (max 100MB)</small>
+                        </div>
+
+                        <div class="form-group col-md-6" id="document_upload" style="display: none;">
+                            <label>Document du cours</label>
+                            <input type="file" name="document" class="form-control" accept=".pdf,.doc,.docx">
+                            <small class="form-text">Format recommandé: PDF, DOC (max 10MB)</small>
                         </div>
                     </div>
 
@@ -180,5 +204,24 @@ require_once 'includes/sidebar.php';
         </div>
     </div>
 </div>
+
+<script>
+function toggleContentUpload() {
+    const contentType = document.getElementById('content_type').value;
+    const videoUpload = document.getElementById('video_upload');
+    const documentUpload = document.getElementById('document_upload');
+
+    if (contentType === 'video') {
+        videoUpload.style.display = 'block';
+        documentUpload.style.display = 'none';
+    } else if (contentType === 'document') {
+        videoUpload.style.display = 'none';
+        documentUpload.style.display = 'block';
+    } else {
+        videoUpload.style.display = 'none';
+        documentUpload.style.display = 'none';
+    }
+}
+</script>
 
 <?php require_once 'includes/footer.php'; ?> 
