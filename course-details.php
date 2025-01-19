@@ -281,12 +281,35 @@ if (!$courseDetails) {
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        .document-viewer iframe,
-        .document-viewer embed {
-            border: none;
+        .document-container {
             width: 100%;
-            height: 600px;
-            display: block;
+            min-height: 600px;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+
+        .doc-fallback {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 24px;
+            background: #a435f0;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #8710d8;
+        }
+
+        .download-btn i {
+            margin-right: 8px;
         }
 
         .course-resources {
@@ -397,18 +420,26 @@ if (!$courseDetails) {
                                     <div class="document-viewer">
                                         <?php 
                                         $fileExtension = pathinfo($courseDetails['content_url'], PATHINFO_EXTENSION);
-                                        if ($fileExtension === 'pdf'): ?>
-                                            <embed src="/Youdemy/<?php echo htmlspecialchars($courseDetails['content_url']); ?>"
-                                                   type="application/pdf"
-                                                   width="100%"
-                                                   height="600px">
-                                        <?php else: ?>
-                                            <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=http://<?php echo $_SERVER['HTTP_HOST']; ?>/Youdemy/<?php echo urlencode($courseDetails['content_url']); ?>"
+                                        $fullUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/Youdemy/' . $courseDetails['content_url'];
+                                        ?>
+                                        <div class="document-container">
+                                            <?php if ($fileExtension === 'pdf'): ?>
+                                                <object
+                                                    data="<?php echo htmlspecialchars($fullUrl); ?>"
+                                                    type="application/pdf"
                                                     width="100%"
-                                                    height="600px"
-                                                    frameborder="0">
-                                            </iframe>
-                                        <?php endif; ?>
+                                                    height="800px">
+                                                    <p>Impossible d'afficher le PDF. <a href="<?php echo htmlspecialchars($fullUrl); ?>" target="_blank">Cliquez ici pour le télécharger</a>.</p>
+                                                </object>
+                                            <?php else: ?>
+                                                <div class="doc-fallback">
+                                                    <p>Pour voir le document, vous pouvez:</p>
+                                                    <a href="<?php echo htmlspecialchars($fullUrl); ?>" class="download-btn" target="_blank">
+                                                        <i class="fas fa-download"></i> Télécharger le document
+                                                    </a>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                                 
