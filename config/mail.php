@@ -23,7 +23,7 @@ class Mail {
     public function send($to, $subject, $message) {
         try {
             //Recipients
-            $this->mail->setFrom('votre_email@gmail.com', 'Youdemy');
+            $this->mail->setFrom('zouhairihlima@gmail.com', 'Youdemy');
             $this->mail->addAddress($to);
 
             //Content
