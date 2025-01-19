@@ -8,14 +8,11 @@
  </head>
  <body>
   <div class="footer">
-   <div class="logo">
-    <img src="/Youdemy/assets/images/logo.png" alt="YouDemy logo" height="20" width="20"/>
-    <span>
-     Learn with YouDemy
-    </span>
+   <div class="logo" style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.2rem;">
+    Youdemy
    </div>
    <div class="center-text">
-    © 2025 YouDemy.
+    © 2025 Youdemy.
    </div>
    <div class="right-section">
     <a href="#">

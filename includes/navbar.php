@@ -6,9 +6,8 @@
 </div>
 <div class="header">
     <div class="logo">
-        <a href="/Youdemy/index.php">
-            <img src="/Youdemy/assets/images/logo.png" alt="YouDemy Logo">
-            YouDemy
+        <a href="/Youdemy/index.php" style="text-decoration: none; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1.5rem; color: #1e1e1e;">
+            Youdemy
         </a>
     </div>
     <div class="search-bar">
