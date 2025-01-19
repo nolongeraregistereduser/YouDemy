@@ -62,74 +62,94 @@ if (!$courseDetails) {
 
         .course-header {
             background: #f8f9fa;
-            padding: 30px;
+            padding: 20px;
             border-radius: 8px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .course-header h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 28px;
+            margin-bottom: 15px;
             color: #1c1d1f;
         }
 
         .course-meta {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
 
         .course-meta span {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #6a6f73;
+            color: #1c1d1f;
         }
 
         .course-meta i {
             color: #5624d0;
         }
 
+        .document-type {
+            background: #e3e6f0;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
         .course-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 30px;
+            gap: 20px;
         }
 
         .main-content {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
         }
 
         .description h2 {
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 20px;
+            margin-bottom: 15px;
             color: #1c1d1f;
         }
 
-        .description p {
-            color: #1c1d1f;
-            line-height: 1.6;
-        }
-
-        .course-preview {
-            margin-top: 30px;
+        .preview-image {
+            margin-top: 15px;
         }
 
         .preview-image img {
             width: 100%;
+            max-height: 300px;
+            object-fit: cover;
             border-radius: 8px;
-            margin-top: 15px;
         }
 
-        .enrollment-card {
-            background: white;
+        .enrollment-status {
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-            position: sticky;
-            top: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .enrollment-status.pending {
+            background-color: #fff3cd;
+            border: 2px solid #ffd700;
+        }
+
+        .enrollment-status.pending i {
+            font-size: 2em;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .enrollment-status.pending h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .enrollment-status.pending p {
+            color: #333;
         }
 
         .enroll-button {
@@ -140,34 +160,12 @@ if (!$courseDetails) {
             border: none;
             border-radius: 4px;
             font-size: 16px;
-            font-weight: 700;
+            font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
         }
 
         .enroll-button:hover {
-            background: #8710d8;
-        }
-
-        .login-prompt {
-            text-align: center;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .login-button {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #a435f0;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-
-        .login-button:hover {
             background: #8710d8;
         }
     </style>
@@ -189,6 +187,10 @@ if (!$courseDetails) {
                         $teacherName = trim(($courseDetails['teacher_firstname'] ?? '') . ' ' . ($courseDetails['teacher_lastname'] ?? ''));
                         echo htmlspecialchars($teacherName);
                     ?>
+                </span>
+                <span class="document-type">
+                    <i class="fas fa-file-alt"></i>
+                    <?php echo htmlspecialchars($courseDetails['document_type'] ?? 'Cours'); ?>
                 </span>
             </div>
         </div>
@@ -228,25 +230,7 @@ if (!$courseDetails) {
                         <div class="enrollment-status pending">
                             <i class="fas fa-clock"></i>
                             <h3>En attente d'approbation</h3>
-                            <p>Votre demande d'inscription est en cours d'examen par l'enseignant.</p>
-                        </div>
-                    <?php elseif ($enrollmentStatus === 'approved'): ?>
-                        <div class="enrollment-status approved">
-                            <i class="fas fa-check-circle"></i>
-                            <h3>Inscrit(e)</h3>
-                            <p>Vous avez accès à tout le contenu du cours.</p>
-                        </div>
-                    <?php elseif ($enrollmentStatus === 'rejected'): ?>
-                        <div class="enrollment-status rejected">
-                            <i class="fas fa-times-circle"></i>
-                            <h3>Inscription refusée</h3>
-                            <p>Vous pouvez faire une nouvelle demande d'inscription.</p>
-                            <form action="enroll.php" method="POST">
-                                <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
-                                <button type="submit" name="enroll" class="enroll-button">
-                                    Réessayer l'inscription
-                                </button>
-                            </form>
+                            <p>Votre demande d'inscription est en cours d'examen.</p>
                         </div>
                     <?php endif; ?>
                 <?php else: ?>
