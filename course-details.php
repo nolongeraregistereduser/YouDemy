@@ -275,14 +275,18 @@ if (!$courseDetails) {
         .document-viewer {
             width: 100%;
             margin: 20px 0;
+            background: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
+        .document-viewer iframe,
         .document-viewer embed {
-            display: block;
             border: none;
+            width: 100%;
+            height: 600px;
+            display: block;
         }
 
         .course-resources {
@@ -379,23 +383,32 @@ if (!$courseDetails) {
 
                         <div class="content-sections">
                             <?php 
-                            // Verify content exists
                             if (!empty($courseDetails['content_type']) && !empty($courseDetails['content_url'])): 
                                 
                                 if ($courseDetails['content_type'] === 'video'): ?>
                                     <div class="video-player">
                                         <video width="100%" height="400" controls>
-                                            <source src="/Youdemy/Uploads/<?php echo htmlspecialchars($courseDetails['content_url']); ?>" 
+                                            <source src="/Youdemy/<?php echo htmlspecialchars($courseDetails['content_url']); ?>" 
                                                     type="video/mp4">
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>
                                 <?php elseif ($courseDetails['content_type'] === 'document'): ?>
                                     <div class="document-viewer">
-                                        <embed src="/Youdemy/Uploads/<?php echo htmlspecialchars($courseDetails['content_url']); ?>"
-                                               type="application/pdf"
-                                               width="100%"
-                                               height="600">
+                                        <?php 
+                                        $fileExtension = pathinfo($courseDetails['content_url'], PATHINFO_EXTENSION);
+                                        if ($fileExtension === 'pdf'): ?>
+                                            <embed src="/Youdemy/<?php echo htmlspecialchars($courseDetails['content_url']); ?>"
+                                                   type="application/pdf"
+                                                   width="100%"
+                                                   height="600px">
+                                        <?php else: ?>
+                                            <iframe src="https://view.officeapps.live.com/op/embed.aspx?src=http://<?php echo $_SERVER['HTTP_HOST']; ?>/Youdemy/<?php echo urlencode($courseDetails['content_url']); ?>"
+                                                    width="100%"
+                                                    height="600px"
+                                                    frameborder="0">
+                                            </iframe>
+                                        <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
                                 
