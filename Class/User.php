@@ -42,36 +42,20 @@ abstract class User {
     }
     
     public function login($email, $password) {
-        $query = "SELECT * FROM " . $this->table . " WHERE email = :email";
-        
         try {
+            $query = "SELECT * FROM " . $this->table . " WHERE email = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            
-            if($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                if(password_verify($password, $row['password'])) {
-                    // Vérifier le statut pour les enseignants
-                    if($row['role'] === 'teacher' && $row['status'] !== 'active') {
-                        $errors[] = "Votre compte est en attente d'approbation";
-                        return false;  // Retourner false au lieu d'un message d'erreur
-                    }
-                    
-                    // Retourner toutes les informations de l'utilisateur
-                    return [
-                        "id" => $row['id'],
-                        "firstname" => $row['firstname'],
-                        "lastname" => $row['lastname'],
-                        "email" => $row['email'],
-                        "role" => $row['role'],
-                        "status" => $row['status']
-                    ];
-                }
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                // Remove sensitive data
+                unset($user['password']);
+                return $user;
             }
             return false;
-            
         } catch(PDOException $e) {
-            echo "Error: " . $e->getMessage();
+            error_log("Login Error in User class: " . $e->getMessage());
             return false;
         }
     }

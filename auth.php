@@ -13,47 +13,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     
-    // On va d'abord vérifier dans la base de données pour déterminer le rôle
-    $query = "SELECT role FROM users WHERE email = ?";
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([$email]);
-    $userRole = $stmt->fetchColumn();
+    try {
+        // Check if user exists and get role and status
+        $query = "SELECT id, role, status FROM users WHERE email = ?";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$email]);
+        $userData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Créer l'instance appropriée selon le rôle
-    if ($userRole === 'student') {
-        $user = new Student($pdo);
-    } elseif ($userRole === 'teacher') {
-        $user = new Teacher($pdo);
-    } elseif ($userRole === 'admin') {
-        $user = new Admin($pdo);
-    } else {
-        $errors[] = "Invalid user role";
-    }
-
-    if (isset($user)) {
-        $loginResult = $user->login($email, $password);
-        if (is_array($loginResult)) {
-            $_SESSION['user'] = $loginResult;
-            // Rediriger vers le bon dashboard selon le rôle
-            if ($loginResult['role'] === 'admin') {
-                header('Location: admin/index.php');
-            } elseif ($loginResult['role'] === 'teacher') {
-                header('Location: professor/index.php');
-            } elseif ($loginResult['role'] === 'student') {
-                header('Location: student/index.php');
-            }
-
-            // adding commits
-            
-            exit();
+        if (!$userData) {
+            $errors[] = "Email ou mot de passe invalide";
         } else {
-            // Ajouter un message d'erreur spécifique pour les comptes en attente
-            if ($userRole === 'teacher') {
+            // Check status for teachers
+            if ($userData['role'] === 'teacher' && $userData['status'] !== 'active') {
                 $errors[] = "Votre compte enseignant est en attente d'approbation par un administrateur.";
             } else {
-                $errors[] = "Email ou mot de passe invalide";
+                // Create appropriate user instance
+                switch ($userData['role']) {
+                    case 'student':
+                        $user = new Student($pdo);
+                        break;
+                    case 'teacher':
+                        $user = new Teacher($pdo);
+                        break;
+                    case 'admin':
+                        $user = new Admin($pdo);
+                        break;
+                    default:
+                        $errors[] = "Type de compte invalide";
+                        break;
+                }
+
+                if (isset($user)) {
+                    $loginResult = $user->login($email, $password);
+                    if (is_array($loginResult)) {
+                        $_SESSION['user'] = $loginResult;
+                        
+                        // Redirect based on role
+                        switch ($loginResult['role']) {
+                            case 'admin':
+                                header('Location: admin/index.php');
+                                break;
+                            case 'teacher':
+                                header('Location: professor/index.php');
+                                break;
+                            case 'student':
+                                header('Location: student/index.php');
+                                break;
+                        }
+                        exit();
+                    } else {
+                        $errors[] = "Email ou mot de passe invalide";
+                    }
+                }
             }
         }
+    } catch (PDOException $e) {
+        error_log("Login Error: " . $e->getMessage());
+        $errors[] = "Une erreur s'est produite. Veuillez réessayer plus tard.";
     }
 }
 ?>
