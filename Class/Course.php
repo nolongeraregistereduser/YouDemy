@@ -9,29 +9,36 @@ class Course {
 
     public function create($data) {
         $query = "INSERT INTO " . $this->table . " 
-                 (title, description, content, content_type, content_url, image_url, teacher_id, category_id, status) 
+                 (title, content, content_type, content_url, image_url, video_url, teacher_id, category_id, status) 
                  VALUES 
-                 (:title, :description, :content, :content_type, :content_url, :image_url, :teacher_id, :category_id, :status)";
+                 (:title, :content, :content_type, :content_url, :image_url, :video_url, :teacher_id, :category_id, :status)";
         
         try {
             $this->pdo->beginTransaction();
             
+            // Debug
+            error_log("Query: " . $query);
+            error_log("Data: " . print_r($data, true));
+
             $stmt = $this->pdo->prepare($query);
-            $stmt->execute([
+            $result = $stmt->execute([
                 ':title' => $data['title'],
-                ':description' => $data['description'],
                 ':content' => $data['content'],
                 ':content_type' => $data['content_type'],
                 ':content_url' => $data['content_url'],
                 ':image_url' => $data['image_url'],
+                ':video_url' => $data['video_url'],
                 ':teacher_id' => $data['teacher_id'],
                 ':category_id' => $data['category_id'],
                 ':status' => 'published'
             ]);
 
+            if (!$result) {
+                error_log("Execute error: " . print_r($stmt->errorInfo(), true));
+            }
+
             $courseId = $this->pdo->lastInsertId();
 
-            // Ajouter les tags si présents
             if (!empty($data['tags'])) {
                 $this->addCourseTags($courseId, $data['tags']);
             }
@@ -41,15 +48,16 @@ class Course {
 
         } catch(PDOException $e) {
             $this->pdo->rollBack();
+            error_log("Create Course Error: " . $e->getMessage());
             throw $e;
         }
     }
 
-    private function addCourseTags($courseId, $tagIds) {
+    private function addCourseTags($courseId, $tags) {
         $query = "INSERT INTO course_tags (course_id, tag_id) VALUES (:course_id, :tag_id)";
         $stmt = $this->pdo->prepare($query);
 
-        foreach ($tagIds as $tagId) {
+        foreach ($tags as $tagId) {
             $stmt->execute([
                 ':course_id' => $courseId,
                 ':tag_id' => $tagId
@@ -74,15 +82,17 @@ class Course {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($id, $data) {
+    public function update($courseId, $data) {
         $query = "UPDATE " . $this->table . " 
-                 SET title = :title, 
-                     description = :description, 
-                     content = :content, 
-                     image_url = :image_url, 
-                     video_url = :video_url, 
-                     category_id = :category_id, 
-                     status = :status 
+                 SET title = :title,
+                     description = :description,
+                     content = :content,
+                     content_type = :content_type,
+                     content_url = :content_url,
+                     image_url = CASE WHEN :image_url IS NOT NULL THEN :image_url ELSE image_url END,
+                     video_url = :video_url,
+                     category_id = :category_id,
+                     status = :status
                  WHERE id = :id AND teacher_id = :teacher_id";
 
         try {
@@ -90,23 +100,28 @@ class Course {
 
             $stmt = $this->pdo->prepare($query);
             $stmt->execute([
-                ':id' => $id,
+                ':id' => $courseId,
                 ':title' => $data['title'],
-                ':description' => $data['description'],
+                ':description' => '', // Empty since we're not using it
                 ':content' => $data['content'],
-                ':image_url' => $data['image_url'],
-                ':video_url' => $data['video_url'],
+                ':content_type' => $data['content_type'],
+                ':content_url' => $data['content_url'] ?? null,
+                ':image_url' => $data['image_url'] ?? null,
+                ':video_url' => $data['video_url'] ?? null,
                 ':category_id' => $data['category_id'],
                 ':status' => $data['status'],
                 ':teacher_id' => $data['teacher_id']
             ]);
 
-            // Mettre à jour les tags
+            // Update tags
             if (isset($data['tags'])) {
-                // Supprimer les anciens tags
-                $this->deleteCourseTags($id);
-                // Ajouter les nouveaux tags
-                $this->addCourseTags($id, $data['tags']);
+                // Remove old tags
+                $query = "DELETE FROM course_tags WHERE course_id = ?";
+                $stmt = $this->pdo->prepare($query);
+                $stmt->execute([$courseId]);
+
+                // Add new tags
+                $this->addCourseTags($courseId, $data['tags']);
             }
 
             $this->pdo->commit();
@@ -114,14 +129,9 @@ class Course {
 
         } catch(PDOException $e) {
             $this->pdo->rollBack();
-            throw $e;
+            error_log("Update Course Error: " . $e->getMessage());
+            return false;
         }
-    }
-
-    private function deleteCourseTags($courseId) {
-        $query = "DELETE FROM course_tags WHERE course_id = :course_id";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute([':course_id' => $courseId]);
     }
 
     public function getById($id) {

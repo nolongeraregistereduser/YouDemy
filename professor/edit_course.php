@@ -49,34 +49,56 @@ $courseTags = !empty($courseDetails['tag_ids']) ? explode(',', $courseDetails['t
 
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = [
-        'title' => $_POST['title'],
-        'description' => trim($_POST['description']),
-        'content' => trim($_POST['content']),
-        'category_id' => $_POST['category_id'],
-        'status' => $_POST['status'],
-        'teacher_id' => $_SESSION['user']['id']
-    ];
+    // Initialize variables
+    $content_url = $courseDetails['content_url'];
+    $content_type = $_POST['content_type'];
+
+    // Handle content upload based on type
+    if ($content_type === 'video' && isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
+        $allowed = ['mp4', 'webm'];
+        $filename = $_FILES['video']['name'];
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        
+        if (in_array(strtolower($filetype), $allowed)) {
+            $content_url = 'uploads/' . uniqid() . '.' . $filetype;
+            move_uploaded_file($_FILES['video']['tmp_name'], '../' . $content_url);
+        }
+    } elseif ($content_type === 'document' && isset($_FILES['document']) && $_FILES['document']['error'] === 0) {
+        $allowed = ['pdf', 'doc', 'docx'];
+        $filename = $_FILES['document']['name'];
+        $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+        
+        if (in_array(strtolower($filetype), $allowed)) {
+            $content_url = 'uploads/' . uniqid() . '.' . $filetype;
+            move_uploaded_file($_FILES['document']['tmp_name'], '../' . $content_url);
+        }
+    }
 
     // Handle image upload if new image is provided
     if (!empty($_FILES['image']['name'])) {
-        $uploadDir = '../uploads/courses/';
-        if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-        
+        $uploadDir = '../uploads/';
         $fileName = uniqid() . '_' . basename($_FILES['image']['name']);
         $uploadFile = $uploadDir . $fileName;
 
         if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
-            $data['image_url'] = 'uploads/courses/' . $fileName;
+            $data['image_url'] = 'uploads/' . $fileName;
         }
     } else {
         $data['image_url'] = $courseDetails['image_url'];
     }
 
-    // Handle tags
-    $data['tags'] = isset($_POST['tags']) ? $_POST['tags'] : [];
+    $data = [
+        'title' => $_POST['title'],
+        'content' => trim($_POST['content'] ?? ''),
+        'content_type' => $content_type,
+        'content_url' => $content_url,
+        'image_url' => $data['image_url'],
+        'video_url' => null,  // Since we're using content_url for videos
+        'category_id' => $_POST['category_id'],
+        'status' => $_POST['status'],
+        'teacher_id' => $_SESSION['user']['id'],
+        'tags' => isset($_POST['tags']) ? $_POST['tags'] : []
+    ];
 
     if ($course->update($courseId, $data)) {
         $_SESSION['success_message'] = "Le cours a été modifié avec succès.";
@@ -111,17 +133,34 @@ require_once 'includes/header.php';
                 </div>
 
                 <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" name="description" class="form-control" rows="4" required>
-                        <?php echo htmlspecialchars($courseDetails['description'] ?? ''); ?>
-                    </textarea>
-                </div>
-
-                <div class="form-group">
                     <label for="content">Contenu</label>
                     <textarea id="content" name="content" class="form-control" rows="4" required>
                         <?php echo htmlspecialchars($courseDetails['content'] ?? ''); ?>
                     </textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Type de contenu</label>
+                    <select name="content_type" id="content_type" class="form-control" required onchange="toggleContentUpload()">
+                        <option value="video" <?php echo ($courseDetails['content_type'] ?? '') === 'video' ? 'selected' : ''; ?>>Vidéo</option>
+                        <option value="document" <?php echo ($courseDetails['content_type'] ?? '') === 'document' ? 'selected' : ''; ?>>Document</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="video_upload" style="display: none;">
+                    <label>Vidéo du cours</label>
+                    <input type="file" name="video" class="form-control" accept="video/*">
+                    <?php if (!empty($courseDetails['content_url']) && $courseDetails['content_type'] === 'video'): ?>
+                        <p>Vidéo actuelle: <?php echo basename($courseDetails['content_url']); ?></p>
+                    <?php endif; ?>
+                </div>
+
+                <div class="form-group" id="document_upload" style="display: none;">
+                    <label>Document du cours</label>
+                    <input type="file" name="document" class="form-control" accept=".pdf,.doc,.docx">
+                    <?php if (!empty($courseDetails['content_url']) && $courseDetails['content_type'] === 'document'): ?>
+                        <p>Document actuel: <?php echo basename($courseDetails['content_url']); ?></p>
+                    <?php endif; ?>
                 </div>
 
                 <div class="form-group">
