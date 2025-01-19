@@ -51,19 +51,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <title>Register - Youdemy</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styleStudent.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
             font-family: 'Inter', sans-serif;
             background: #f8f9fb;
         }
 
         .register-page {
-            display: flex;
-            width: 100%;
+            flex: 1;
+            margin-top: 60px; /* For fixed navbar */
         }
 
         .register-image {
@@ -231,9 +233,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         .error {
             border-color: #dc3545 !important;
         }
+
+        footer {
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>
+    <?php include 'includes/navbar.php'; ?>
+    
     <div class="register-page">
         <div class="register-image"></div>
         <div class="register-container">
@@ -283,6 +291,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Vous avez déjà un compte ? <a href="/Youdemy/auth.php">Connectez-vous</a></p>
         </div>
     </div>
+
+    <?php include 'includes/footer.php'; ?>
     <script src="/Youdemy/assets/js/validation.js"></script>
 </body>
 </html> 

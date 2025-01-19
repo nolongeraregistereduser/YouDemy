@@ -79,19 +79,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <title>Login - Youdemy</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styleStudent.css">
     <style>
         body {
-            margin: 0;
-            padding: 0;
             display: flex;
+            flex-direction: column;
             min-height: 100vh;
-            font-family: 'Inter', sans-serif;
-            background: #f8f9fb;
         }
 
         .login-page {
-            display: flex;
-            width: 100%;
+            flex: 1;
+            margin-top: 60px; /* For fixed navbar */
+        }
+
+        footer {
+            margin-top: auto;
         }
 
         .login-image {
@@ -247,6 +249,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </style>
 </head>
 <body>
+    <?php include 'includes/navbar.php'; ?>
+    
     <div class="login-page">
         <div class="login-image"></div>
         <div class="login-container">
@@ -284,5 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Vous n'avez pas de compte ? <a href="register.php">Inscrivez-vous</a></p>
         </div>
     </div>
+
+    <?php include 'includes/footer.php'; ?>
 </body>
 </html>
