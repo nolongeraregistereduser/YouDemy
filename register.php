@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (empty($errors)) {
             if ($user->register($data)) {
                 $_SESSION['success'] = "Registration successful! Please login.";
-                header('Location: auth.php');
+                header('Location: /Youdemy/auth.php');
                 exit();
             } else {
                 $errors[] = "Registration failed";
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </style>
     <title>Register - Youdemy</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/Youdemy/assets/css/style.css">
 </head>
 <body class="bg-gradient">
     <div class="register-container">
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="register.php" onsubmit="validateRegisterForm(event)">
+        <form method="POST" action="/Youdemy/register.php" onsubmit="validateRegisterForm(event)">
             <div class="form-group">
                 <input type="text" name="firstname" placeholder="First Name" required
                        oninput="this.classList.remove('error')">
@@ -133,9 +133,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             <button type="submit">Register</button>
             
-            <p>Already have an account? <a href="auth.php">Login here</a></p>
+            <p>Already have an account? <a href="/Youdemy/auth.php">Login here</a></p>
         </form>
     </div>
-    <script src="assets/js/validation.js"></script>
+    <script src="/Youdemy/assets/js/validation.js"></script>
 </body>
 </html> 

@@ -192,4 +192,45 @@ class Course {
             return [];
         }
     }
+
+    public function getPreviewContent($courseId) {
+        $query = "SELECT c.*, u.firstname as teacher_firstname, u.lastname as teacher_lastname, 
+                         cat.name as category_name, c.content_url, c.content_type,
+                         c.image_url
+                  FROM " . $this->table . " c
+                  LEFT JOIN users u ON c.teacher_id = u.id 
+                  LEFT JOIN categories cat ON c.category_id = cat.id 
+                  WHERE c.id = ?";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$courseId]);
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getCourseDetails($courseId) {
+        $query = "SELECT c.*, u.firstname as teacher_firstname, 
+                 u.lastname as teacher_lastname, 
+                 cat.name as category_name,
+                 COUNT(DISTINCT e.student_id) as total_students
+                 FROM courses c 
+                 LEFT JOIN users u ON c.teacher_id = u.id
+                 LEFT JOIN categories cat ON c.category_id = cat.id
+                 LEFT JOIN enrollments e ON c.id = e.course_id
+                 WHERE c.id = ? AND c.status = 'published'
+                 GROUP BY c.id";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$courseId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function isStudentEnrolled($courseId, $studentId) {
+        $query = "SELECT COUNT(*) FROM enrollments 
+                  WHERE course_id = ? AND student_id = ?";
+        
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$courseId, $studentId]);
+        return $stmt->fetchColumn() > 0;
+    }
 } 

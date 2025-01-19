@@ -163,3 +163,17 @@ SELECT * FROM courses;
 ALTER TABLE courses
 ADD COLUMN content_type ENUM('video', 'document') AFTER content,
 ADD COLUMN content_url VARCHAR(255) AFTER content_type;
+
+
+DROP TABLE IF EXISTS enrollments;
+CREATE TABLE enrollments (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    student_id INT NOT NULL,
+    course_id INT NOT NULL,
+    status ENUM('pending','approved','rejected') NOT NULL DEFAULT 'pending',
+    enrollment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completion_date TIMESTAMP NULL,
+    FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_enrollment (student_id, course_id)
+);
