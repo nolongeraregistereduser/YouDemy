@@ -23,7 +23,8 @@ if ($dashboardData === false) {
         'total_courses' => 0,
         'total_students' => 0,
         'recent_courses' => [],
-        'course_status' => []
+        'course_status' => [],
+        'active_courses' => 0
     ];
 }
 
@@ -70,18 +71,7 @@ require_once 'includes/sidebar.php';
             </div>
             <div class="stat-details">
                 <h3>Cours Actifs</h3>
-                <p class="stat-number">
-                    <?php 
-                    $active_courses = 0;
-                    foreach ($dashboardData['course_status'] as $status) {
-                        if ($status['status'] === 'active') {
-                            $active_courses = $status['count'];
-                            break;
-                        }
-                    }
-                    echo $active_courses;
-                    ?>
-                </p>
+                <p class="stat-number"><?php echo $dashboardData['active_courses']; ?></p>
             </div>
         </div>
     </div>

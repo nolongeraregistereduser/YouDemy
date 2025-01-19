@@ -31,8 +31,12 @@ $page = 'add_course';
 $user = $_SESSION['user'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Traitement upload image
+    // Initialize variables
     $image_url = '';
+    $content_url = '';
+    $content_type = $_POST['content_type'] ?? null;
+
+    // Handle image upload
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $allowed = ['jpg', 'jpeg', 'png', 'gif'];
         $filename = $_FILES['image']['name'];
@@ -44,11 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Initialize content URL
-    $content_url = '';
-    $content_type = $_POST['content_type'];
-
-    // Handle content upload based on type
+    // Handle content file upload
     if ($content_type === 'video' && isset($_FILES['video']) && $_FILES['video']['error'] === 0) {
         $allowed = ['mp4', 'webm'];
         $filename = $_FILES['video']['name'];
@@ -72,23 +72,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $courseData = [
             'title' => $_POST['title'],
-            'description' => $_POST['description'],
-            'content' => $_POST['content'],
-            'image_url' => $image_url,
-            'content_url' => $content_url,
+            'content' => $_POST['content'] ?? '',  // Make sure content is included
             'content_type' => $content_type,
+            'content_url' => $content_url,
+            'image_url' => $image_url,
+            'video_url' => null,
             'teacher_id' => $_SESSION['user']['id'],
             'category_id' => $_POST['category_id'],
             'tags' => isset($_POST['tags']) ? $_POST['tags'] : []
         ];
 
+        // Debug
+        error_log("Course Data: " . print_r($courseData, true));
+
         if ($course->create($courseData)) {
-            $message = "Cours ajouté avec succès";
+            $_SESSION['success_message'] = "Cours ajouté avec succès";
             header('Location: index.php');
             exit();
         }
     } catch(PDOException $e) {
         $error = "Erreur lors de l'ajout du cours: " . $e->getMessage();
+        error_log($error);
     }
 }
 
@@ -123,15 +127,15 @@ require_once 'includes/sidebar.php';
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data" class="course-form">
                     <div class="form-group">
-                        <label>Titre du cours</label>
+                        <label for="title">Titre du cours</label>
                         <input type="text" name="title" class="form-control" required 
                                placeholder="Entrez le titre du cours">
                     </div>
 
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="description" class="form-control" rows="3" required
-                                  placeholder="Décrivez brièvement votre cours"></textarea>
+                        <label for="content">Contenu</label>
+                        <textarea name="content" class="form-control" rows="4" required
+                                  placeholder="Décrivez votre cours"><?php echo htmlspecialchars($_POST['content'] ?? ''); ?></textarea>
                     </div>
 
                     <div class="form-group">
@@ -139,54 +143,50 @@ require_once 'includes/sidebar.php';
                         <select name="content_type" id="content_type" class="form-control" required onchange="toggleContentUpload()">
                             <option value="">Sélectionner le type de contenu</option>
                             <option value="video">Vidéo</option>
-                            <option value="document">Document (PDF)</option>
+                            <option value="document">Document</option>
                         </select>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Image du cours</label>
-                            <input type="file" name="image" class="form-control" accept="image/*">
-                            <small class="form-text">Format recommandé: JPG, PNG (max 2MB)</small>
-                        </div>
-
-                        <div class="form-group col-md-6" id="video_upload" style="display: none;">
-                            <label>Vidéo du cours</label>
-                            <input type="file" name="video" class="form-control" accept="video/*">
-                            <small class="form-text">Format recommandé: MP4, WEBM (max 100MB)</small>
-                        </div>
-
-                        <div class="form-group col-md-6" id="document_upload" style="display: none;">
-                            <label>Document du cours</label>
-                            <input type="file" name="document" class="form-control" accept=".pdf,.doc,.docx">
-                            <small class="form-text">Format recommandé: PDF, DOC (max 10MB)</small>
-                        </div>
+                    <div class="form-group" id="video_upload" style="display: none;">
+                        <label>Vidéo du cours</label>
+                        <input type="file" name="video" class="form-control" accept="video/*">
+                        <small class="form-text">Format recommandé: MP4, WEBM (max 100MB)</small>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label>Catégorie</label>
-                            <select name="category_id" class="form-control" required>
-                                <option value="">Sélectionner une catégorie</option>
-                                <?php foreach ($categories as $cat): ?>
-                                    <option value="<?php echo $cat['id']; ?>">
-                                        <?php echo htmlspecialchars($cat['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+                    <div class="form-group" id="document_upload" style="display: none;">
+                        <label>Document du cours</label>
+                        <input type="file" name="document" class="form-control" accept=".pdf,.doc,.docx">
+                        <small class="form-text">Format recommandé: PDF, DOC (max 10MB)</small>
+                    </div>
 
-                        <div class="form-group col-md-6">
-                            <label>Tags</label>
-                            <select name="tags[]" class="form-control" multiple>
-                                <?php foreach ($tags as $t): ?>
-                                    <option value="<?php echo $t['id']; ?>">
-                                        <?php echo htmlspecialchars($t['name']); ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
-                            <small class="form-text">Maintenez Ctrl pour sélectionner plusieurs tags</small>
-                        </div>
+                    <div class="form-group">
+                        <label>Image du cours</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                        <small class="form-text">Format recommandé: JPG, PNG (max 2MB)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        <select name="category_id" class="form-control" required>
+                            <option value="">Sélectionner une catégorie</option>
+                            <?php foreach ($categories as $cat): ?>
+                                <option value="<?php echo $cat['id']; ?>">
+                                    <?php echo htmlspecialchars($cat['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <select name="tags[]" class="form-control" multiple>
+                            <?php foreach ($tags as $t): ?>
+                                <option value="<?php echo $t['id']; ?>">
+                                    <?php echo htmlspecialchars($t['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <small class="form-text">Maintenez Ctrl pour sélectionner plusieurs tags</small>
                     </div>
 
                     <div class="form-actions">
