@@ -43,8 +43,127 @@ if (!$courseDetails) {
 <head>
     <title><?php echo htmlspecialchars($courseDetails['title'] ?? ''); ?> | YouDemy</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/Youdemy/assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/styleStudent.css">
+    <style>
+        .course-details-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .course-header {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .course-header h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #1c1d1f;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 20px;
+        }
+
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6a6f73;
+        }
+
+        .course-meta i {
+            color: #5624d0;
+        }
+
+        .course-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .main-content {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+
+        .description h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #1c1d1f;
+        }
+
+        .description p {
+            color: #1c1d1f;
+            line-height: 1.6;
+        }
+
+        .course-preview {
+            margin-top: 30px;
+        }
+
+        .preview-image img {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .enrollment-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 20px;
+        }
+
+        .enroll-button {
+            width: 100%;
+            padding: 16px;
+            background: #a435f0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .enroll-button:hover {
+            background: #8710d8;
+        }
+
+        .login-prompt {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .login-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #a435f0;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .login-button:hover {
+            background: #8710d8;
+        }
+    </style>
 </head>
 <body>
     <?php include 'includes/navbar.php'; ?>

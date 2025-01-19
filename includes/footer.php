@@ -9,7 +9,7 @@
  <body>
   <div class="footer">
    <div class="logo">
-    <img alt="Udemy logo" height="20" src="https://storage.googleapis.com/a1aa/image/KQGhToq8pmZlqpG6KmxVQ7utvMovYMFlj9h8k_yxe_M.jpg" width="20"/>
+    <img src="/Youdemy/assets/images/logo.png" alt="YouDemy logo" height="20" width="20"/>
     <span>
      Learn with YouDemy
     </span>

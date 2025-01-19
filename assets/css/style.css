@@ -516,3 +516,114 @@ table tr:last-child td {
     border: 1px solid transparent;
     border-radius: 4px;
 }
+
+.course-details-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.course-header {
+    margin-bottom: 30px;
+}
+
+.course-header h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.course-meta {
+    display: flex;
+    gap: 20px;
+    color: #666;
+}
+
+.course-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.course-meta i {
+    color: #5624d0;
+}
+
+.course-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.main-content {
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.description h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.course-preview {
+    margin-top: 30px;
+}
+
+.preview-image img {
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.sidebar {
+    padding: 20px;
+}
+
+.enrollment-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.enroll-button {
+    width: 100%;
+    padding: 12px;
+    background: #5624d0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.enroll-button:hover {
+    background: #401b9c;
+}
+
+.login-prompt {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.login-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #5624d0;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.login-button:hover {
+    background: #401b9c;
+}

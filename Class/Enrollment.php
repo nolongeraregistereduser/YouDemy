@@ -32,10 +32,21 @@ class Enrollment {
 
         // Create new enrollment request
         $query = "INSERT INTO " . $this->table . 
-                " (student_id, course_id, status, request_date) 
-                 VALUES (?, ?, 'pending', NOW())";
+                " (student_id, course_id, status) 
+                 VALUES (?, ?, 'pending')";
         
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$studentId, $courseId]);
+    }
+
+    public function getEnrollmentStatus($studentId, $courseId) {
+        $query = "SELECT status FROM " . $this->table . 
+                " WHERE student_id = ? AND course_id = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$studentId, $courseId]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['status'] : null;
     }
 } 
