@@ -32,18 +32,12 @@ if (isset($teacher)) {
             <i class="fas fa-plus-circle"></i>
             <span>Ajouter un cours</span>
         </a>
-        <a href="students.php" class="nav-item <?php echo $page === 'students' ? 'active' : ''; ?>">
-            <i class="fas fa-users"></i>
-            <span>Students</span>
-        </a>
+
         <a href="analytics.php" class="nav-item <?php echo $page === 'analytics' ? 'active' : ''; ?>">
             <i class="fas fa-chart-bar"></i>
             <span>Analytics</span>
         </a>
-        <a href="settings.php" class="nav-item <?php echo $page === 'settings' ? 'active' : ''; ?>">
-            <i class="fas fa-cog"></i>
-            <span>Settings</span>
-        </a>
+
         <a href="enrollments.php" class="nav-item <?php echo $page === 'enrollments' ? 'active' : ''; ?>">
             <i class="fas fa-user-check"></i>
             <span>Inscriptions</span>
@@ -51,7 +45,7 @@ if (isset($teacher)) {
                 <span class="badge"><?php echo $pendingCount; ?></span>
             <?php endif; ?>
         </a>
-        <a href="logout.php" class="nav-item logout">
+        <a href="../logout.php" class="nav-item logout">
             <i class="fas fa-sign-out-alt"></i>
             <span>Logout</span>
         </a>
