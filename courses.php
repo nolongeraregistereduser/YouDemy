@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once '../config/database.php';
-require_once '../Class/Course.php';
-require_once '../Class/Category.php';
+require_once __DIR__ . '/config/database.php';
+require_once __DIR__ . '/Class/Course.php';
+require_once __DIR__ . '/Class/Category.php';
 
 // Initialize database connection
 $database = new Database();
