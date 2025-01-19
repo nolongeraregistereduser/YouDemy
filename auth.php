@@ -48,16 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (is_array($loginResult)) {
                         $_SESSION['user'] = $loginResult;
                         
-                        // Redirect based on role
+                        // Updated redirections based on role
                         switch ($loginResult['role']) {
                             case 'admin':
-                                header('Location: admin/index.php');
+                                header('Location: /Youdemy/admin/index.php');
                                 break;
                             case 'teacher':
-                                header('Location: professor/index.php');
+                                header('Location: /Youdemy/professor/index.php');
                                 break;
                             case 'student':
-                                header('Location: student/index.php');
+                                header('Location: /Youdemy/index.php');  // Changed to main index for students
                                 break;
                         }
                         exit();
