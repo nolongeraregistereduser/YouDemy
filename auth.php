@@ -78,42 +78,211 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <title>Login - Youdemy</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fb;
+        }
+
+        .login-page {
+            display: flex;
+            width: 100%;
+        }
+
+        .login-image {
+            flex: 1;
+            background-image: url('assets/images/login-bg.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .login-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 64px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #1c1d1f;
+            margin-bottom: 48px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d1d7dc;
+            border-radius: 4px;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #a435f0;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(164,53,240,0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #a435f0;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 16px;
+        }
+
+        button:hover {
+            background: #8710d8;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #d1d7dc;
+        }
+
+        .divider span {
+            background: #fff;
+            padding: 0 16px;
+            color: #6a6f73;
+            position: relative;
+            font-size: 14px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d7dc;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .social-btn:hover {
+            background: #f7f9fa;
+            border-color: #a435f0;
+        }
+
+        .social-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+        p {
+            text-align: center;
+            color: #6a6f73;
+            font-size: 14px;
+            margin-top: 24px;
+        }
+
+        a {
+            color: #a435f0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .alert-danger {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            color: #cf1322;
+        }
+
+        .alert-success {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            color: #389e0d;
+        }
+    </style>
 </head>
-<body class="bg-gradient">
-    <div class="login-container">
-        <h2>Welcome to Youdemy</h2>
-        
-        <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger">
-                <?php foreach($errors as $error): ?>
-                    <p><?php echo htmlspecialchars($error); ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success">
-                <?php 
-                    echo htmlspecialchars($_SESSION['success']);
-                    unset($_SESSION['success']);
-                ?>
-            </div>
-        <?php endif; ?>
-        
-        <form method="POST" action="auth.php">
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Email" required>
-            </div>
+<body>
+    <div class="login-page">
+        <div class="login-image"></div>
+        <div class="login-container">
+            <h2>Connectez-vous à Youdemy</h2>
             
-            <div class="form-group">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
+            <?php if (!empty($errors)): ?>
+                <div class="alert alert-danger">
+                    <?php foreach($errors as $error): ?>
+                        <p><?php echo htmlspecialchars($error); ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             
-            <button type="submit">Login</button>
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success">
+                    <?php 
+                        echo htmlspecialchars($_SESSION['success']);
+                        unset($_SESSION['success']);
+                    ?>
+                </div>
+            <?php endif; ?>
             
-            <p>Don't have an account? <a href="register.php">Register here</a></p>
-        </form>
+            <form method="POST" action="auth.php">
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" name="password" placeholder="Mot de passe" required>
+                </div>
+                
+                <button type="submit">Se connecter</button>
+            </form>
+            
+            <p>Vous n'avez pas de compte ? <a href="register.php">Inscrivez-vous</a></p>
+        </div>
     </div>
 </body>
 </html>
