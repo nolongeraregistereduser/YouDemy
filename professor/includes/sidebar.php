@@ -1,3 +1,11 @@
+<?php
+// Add this at the top of the file
+$pendingCount = 0;
+if (isset($teacher)) {
+    $pendingCount = $teacher->getPendingEnrollmentsCount();
+}
+?>
+
 <aside class="sidebar">
     <div class="logo">
         <h1>Youdemy</h1>
@@ -35,6 +43,13 @@
         <a href="settings.php" class="nav-item <?php echo $page === 'settings' ? 'active' : ''; ?>">
             <i class="fas fa-cog"></i>
             <span>Settings</span>
+        </a>
+        <a href="enrollments.php" class="nav-item <?php echo $page === 'enrollments' ? 'active' : ''; ?>">
+            <i class="fas fa-user-check"></i>
+            <span>Inscriptions</span>
+            <?php if ($pendingCount > 0): ?>
+                <span class="badge"><?php echo $pendingCount; ?></span>
+            <?php endif; ?>
         </a>
         <a href="logout.php" class="nav-item logout">
             <i class="fas fa-sign-out-alt"></i>
