@@ -107,17 +107,21 @@ require_once 'includes/header.php';
                 <div class="form-group">
                     <label for="title">Titre du cours</label>
                     <input type="text" id="title" name="title" class="form-control" 
-                           value="<?php echo htmlspecialchars($courseDetails['title']); ?>" required>
+                           value="<?php echo htmlspecialchars($courseDetails['title'] ?? ''); ?>" required>
                 </div>
 
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" name="description" class="form-control" rows="4" required><?php echo htmlspecialchars($courseDetails['description']); ?></textarea>
+                    <textarea id="description" name="description" class="form-control" rows="4" required>
+                        <?php echo htmlspecialchars($courseDetails['description'] ?? ''); ?>
+                    </textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="content">Contenu</label>
-                    <textarea id="content" name="content" class="form-control" rows="8" required><?php echo htmlspecialchars($courseDetails['content']); ?></textarea>
+                    <textarea id="content" name="content" class="form-control" rows="4" required>
+                        <?php echo htmlspecialchars($courseDetails['content'] ?? ''); ?>
+                    </textarea>
                 </div>
 
                 <div class="form-group">

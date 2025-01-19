@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $courseData = [
             'title' => $_POST['title'],
-            'description' => $_POST['description'],
+            'description' => '',
             'content' => $_POST['content'],
             'image_url' => $image_url,
             'content_url' => $content_url,
@@ -123,9 +123,15 @@ require_once 'includes/sidebar.php';
             <div class="card-body">
                 <form method="POST" enctype="multipart/form-data" class="course-form">
                     <div class="form-group">
-                        <label>Titre du cours</label>
+                        <label for="title">Titre du cours</label>
                         <input type="text" name="title" class="form-control" required 
                                placeholder="Entrez le titre du cours">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">Contenu</label>
+                        <textarea name="content" class="form-control" rows="4" required
+                                  placeholder="Décrivez votre cours"><?php echo htmlspecialchars($_POST['content'] ?? ''); ?></textarea>
                     </div>
 
                     <div class="form-group">
