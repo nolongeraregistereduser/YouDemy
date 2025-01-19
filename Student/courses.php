@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once '../config/database.php';
 require_once '../Class/Course.php';
 require_once '../Class/Category.php';

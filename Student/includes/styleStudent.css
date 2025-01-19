@@ -743,3 +743,56 @@ body {
     background: rgba(86, 36, 208, 0.2);
     transform: translateY(-1px);
 }
+
+/* Add these styles for the user menu */
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-menu span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #1c1d1f;
+    font-weight: 500;
+}
+
+.user-menu .btn-logout {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #d23f57;
+    border: 1px solid #d23f57;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.user-menu .btn-logout:hover {
+    background: #d23f57;
+    color: white;
+}
+
+.btn-login, .btn-register {
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-login {
+    color: #5624d0;
+    border: 1px solid #5624d0;
+}
+
+.btn-register {
+    background: #5624d0;
+    color: white;
+    border: 1px solid #5624d0;
+}
+
+.btn-login:hover, .btn-register:hover {
+    transform: translateY(-2px);
+}
