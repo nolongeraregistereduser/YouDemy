@@ -20,20 +20,29 @@ class Enrollment {
 
     public function requestEnrollment($studentId, $courseId) {
         // Check if enrollment already exists
-        $query = "SELECT id FROM " . $this->table . 
+        $query = "SELECT id, status FROM " . $this->table . 
                 " WHERE student_id = ? AND course_id = ?";
         
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$studentId, $courseId]);
+        $existing = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($stmt->fetch()) {
-            return false; // Already enrolled/requested
+        if ($existing) {
+            if ($existing['status'] === 'rejected') {
+                // If previously rejected, allow new request
+                $query = "UPDATE " . $this->table . 
+                        " SET status = 'pending' 
+                          WHERE id = ?";
+                $stmt = $this->conn->prepare($query);
+                return $stmt->execute([$existing['id']]);
+            }
+            return false; // Already enrolled or pending
         }
 
         // Create new enrollment request
         $query = "INSERT INTO " . $this->table . 
                 " (student_id, course_id, status) 
-                 VALUES (?, ?, 'pending')";
+                  VALUES (?, ?, 'pending')";
         
         $stmt = $this->conn->prepare($query);
         return $stmt->execute([$studentId, $courseId]);
