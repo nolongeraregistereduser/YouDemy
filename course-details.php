@@ -60,22 +60,35 @@ if (!$courseDetails) {
             padding: 20px;
         }
 
-        .course-header {
-            background: #f8f9fa;
+        .course-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .main-content {
+            background: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .course-header {
             margin-bottom: 20px;
         }
 
         .course-header h1 {
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 15px;
             color: #1c1d1f;
+            font-weight: 600;
         }
 
         .course-meta {
             display: flex;
+            flex-wrap: wrap;
             gap: 15px;
+            margin-bottom: 15px;
         }
 
         .course-meta span {
@@ -83,6 +96,7 @@ if (!$courseDetails) {
             align-items: center;
             gap: 8px;
             color: #1c1d1f;
+            font-size: 14px;
         }
 
         .course-meta i {
@@ -93,73 +107,103 @@ if (!$courseDetails) {
             background: #e3e6f0;
             padding: 4px 12px;
             border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .course-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
+        .course-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        .main-content {
-            background: white;
-            padding: 20px;
+        .tag {
+            background: #f1f1f1;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag:hover {
+            background: #e3e3e3;
+            color: #333;
+        }
+
+        .course-preview {
+            background: #f8f9fa;
             border-radius: 8px;
-        }
-
-        .description h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #1c1d1f;
+            overflow: hidden;
         }
 
         .preview-image {
-            margin-top: 15px;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 10px;
         }
 
         .preview-image img {
             width: 100%;
-            max-height: 300px;
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             border-radius: 8px;
+        }
+
+        .description {
+            padding: 20px;
+        }
+
+        .description h2 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: #1c1d1f;
+            font-weight: 600;
+        }
+
+        .description p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #1c1d1f;
         }
 
         .enrollment-status {
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             text-align: center;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .enrollment-status.pending {
             background-color: #fff3cd;
-            border: 2px solid #ffd700;
+            border: 1px solid #ffd700;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
         .enrollment-status.pending i {
-            font-size: 2em;
+            font-size: 24px;
             color: #856404;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .enrollment-status.pending h3 {
+            font-size: 16px;
             color: #856404;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .enrollment-status.pending p {
+            font-size: 14px;
             color: #333;
         }
 
         .enroll-button {
             width: 100%;
-            padding: 16px;
+            padding: 12px;
             background: #a435f0;
             color: white;
             border: none;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s;
@@ -174,43 +218,41 @@ if (!$courseDetails) {
     <?php include 'includes/navbar.php'; ?>
 
     <div class="course-details-container">
-        <div class="course-header">
-            <h1><?php echo htmlspecialchars($courseDetails['title'] ?? ''); ?></h1>
-            <div class="course-meta">
-                <span class="category">
-                    <i class="fas fa-folder"></i>
-                    <?php echo htmlspecialchars($courseDetails['category_name'] ?? ''); ?>
-                </span>
-                <span class="instructor">
-                    <i class="fas fa-chalkboard-teacher"></i>
-                    <?php 
-                        $teacherName = trim(($courseDetails['teacher_firstname'] ?? '') . ' ' . ($courseDetails['teacher_lastname'] ?? ''));
-                        echo htmlspecialchars($teacherName);
-                    ?>
-                </span>
-                <span class="document-type">
-                    <i class="fas fa-file-alt"></i>
-                    <?php echo htmlspecialchars($courseDetails['document_type'] ?? 'Cours'); ?>
-                </span>
-            </div>
-        </div>
-
         <div class="course-content">
             <div class="main-content">
-                <div class="description">
-                    <h2>Description du cours</h2>
-                    <p><?php echo nl2br(htmlspecialchars($courseDetails['description'] ?? '')); ?></p>
+                <div class="course-header">
+                    <h1><?php echo htmlspecialchars($courseDetails['title'] ?? ''); ?></h1>
+                    <div class="course-meta">
+                        <span class="category">
+                            <i class="fas fa-folder"></i>
+                            <?php echo htmlspecialchars($courseDetails['category_name'] ?? ''); ?>
+                        </span>
+                        <span class="instructor">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <?php 
+                                $teacherName = trim(($courseDetails['teacher_firstname'] ?? '') . ' ' . ($courseDetails['teacher_lastname'] ?? ''));
+                                echo htmlspecialchars($teacherName);
+                            ?>
+                        </span>
+                        <span class="document-type">
+                            <i class="fas fa-file-alt"></i>
+                            <?php echo htmlspecialchars($courseDetails['document_type'] ?? 'Cours'); ?>
+                        </span>
+                    </div>
+
+                    <?php if (!empty($courseDetails['tags'])): ?>
+                        <div class="course-tags">
+                            <?php foreach(explode(',', $courseDetails['tags']) as $tag): ?>
+                                <span class="tag"><?php echo htmlspecialchars(trim($tag)); ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <?php if (!$isEnrolled): ?>
-                    <div class="course-preview">
-                        <h2>Aperçu du cours</h2>
-                        <?php if (!empty($courseDetails['image_url'])): ?>
-                            <div class="preview-image">
-                                <img src="<?php echo htmlspecialchars($courseDetails['image_url']); ?>" 
-                                     alt="Aperçu du cours">
-                            </div>
-                        <?php endif; ?>
+                <?php if (!empty($courseDetails['image_url'])): ?>
+                    <div class="preview-image">
+                        <img src="<?php echo htmlspecialchars($courseDetails['image_url']); ?>" 
+                             alt="Aperçu du cours">
                     </div>
                 <?php endif; ?>
             </div>
