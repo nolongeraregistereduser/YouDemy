@@ -796,3 +796,106 @@ body {
 .btn-login:hover, .btn-register:hover {
     transform: translateY(-2px);
 }
+
+/* Enrollment Status Styles */
+.enrollment-status {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.enrollment-status i {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.enrollment-status h3 {
+    margin: 10px 0;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #1c1d1f;
+}
+
+.enrollment-status p {
+    font-size: 1.1em;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+/* Pending Status */
+.enrollment-status.pending {
+    background-color: #fff3cd;
+    border: 2px solid #ffd700;
+}
+
+.enrollment-status.pending i {
+    color: #856404;
+}
+
+.enrollment-status.pending h3 {
+    color: #856404;
+}
+
+.enrollment-status.pending p {
+    color: #333;
+}
+
+/* Approved Status */
+.enrollment-status.approved {
+    background-color: #d4edda;
+    border: 2px solid #28a745;
+}
+
+.enrollment-status.approved i {
+    color: #155724;
+}
+
+.enrollment-status.approved h3 {
+    color: #155724;
+}
+
+.enrollment-status.approved p {
+    color: #333;
+}
+
+/* Rejected Status */
+.enrollment-status.rejected {
+    background-color: #f8d7da;
+    border: 2px solid #dc3545;
+}
+
+.enrollment-status.rejected i {
+    color: #721c24;
+}
+
+.enrollment-status.rejected h3 {
+    color: #721c24;
+}
+
+.enrollment-status.rejected p {
+    color: #333;
+}
+
+/* Success/Error Messages */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}

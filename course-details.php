@@ -29,6 +29,13 @@ if ($isStudent) {
     $isEnrolled = $enrollmentObj->isEnrolled($studentId, $courseId);
 }
 
+// Get enrollment status if student
+$enrollmentStatus = null;
+if ($isStudent) {
+    $studentId = $_SESSION['user']['id'];
+    $enrollmentStatus = $enrollmentObj->getEnrollmentStatus($studentId, $courseId);
+}
+
 // Get course preview details
 $courseDetails = $courseObj->getPreviewContent($courseId);
 
@@ -207,16 +214,42 @@ if (!$courseDetails) {
             </div>
 
             <div class="sidebar">
-                <?php if (!$isEnrolled && $isStudent): ?>
-                    <div class="enrollment-card">
-                        <form action="enroll.php" method="POST">
-                            <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
-                            <button type="submit" name="enroll" class="enroll-button">
-                                Demander l'inscription
-                            </button>
-                        </form>
-                    </div>
-                <?php elseif (!$isStudent): ?>
+                <?php if ($isStudent): ?>
+                    <?php if (!$enrollmentStatus): ?>
+                        <div class="enrollment-card">
+                            <form action="enroll.php" method="POST">
+                                <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
+                                <button type="submit" name="enroll" class="enroll-button">
+                                    Demander l'inscription
+                                </button>
+                            </form>
+                        </div>
+                    <?php elseif ($enrollmentStatus === 'pending'): ?>
+                        <div class="enrollment-status pending">
+                            <i class="fas fa-clock"></i>
+                            <h3>En attente d'approbation</h3>
+                            <p>Votre demande d'inscription est en cours d'examen par l'enseignant.</p>
+                        </div>
+                    <?php elseif ($enrollmentStatus === 'approved'): ?>
+                        <div class="enrollment-status approved">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Inscrit(e)</h3>
+                            <p>Vous avez accès à tout le contenu du cours.</p>
+                        </div>
+                    <?php elseif ($enrollmentStatus === 'rejected'): ?>
+                        <div class="enrollment-status rejected">
+                            <i class="fas fa-times-circle"></i>
+                            <h3>Inscription refusée</h3>
+                            <p>Vous pouvez faire une nouvelle demande d'inscription.</p>
+                            <form action="enroll.php" method="POST">
+                                <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
+                                <button type="submit" name="enroll" class="enroll-button">
+                                    Réessayer l'inscription
+                                </button>
+                            </form>
+                        </div>
+                    <?php endif; ?>
+                <?php else: ?>
                     <div class="login-prompt">
                         <p>Connectez-vous en tant qu'étudiant pour vous inscrire à ce cours</p>
                         <a href="/Youdemy/auth.php" class="login-button">Se connecter</a>
