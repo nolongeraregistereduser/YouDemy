@@ -1,8 +1,8 @@
 <?php
 // Remove HTML, head, body tags - keep only content
 ?>
-<div class="top-banner">
-    Prêt à vous mettre à la page ? | Obtenez les compétences qu'il vous faut avec Udemy Business.
+<div class="top-banner" style="text-align: center; padding: 8px; background-color: #f5f5f5; color: #1e1e1e; font-size: 0.9rem;">
+    Développez vos compétences avec Youdemy | Accédez à plus de 1000 cours en ligne de qualité
 </div>
 <div class="header">
     <div class="logo">
