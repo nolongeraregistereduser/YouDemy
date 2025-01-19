@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once '../config/database.php';
+require_once '../Class/Course.php';
+require_once '../Class/Enrollment.php';
+require_once '../Class/User.php';
 require_once '../Class/Teacher.php';
 
 if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'teacher') {
@@ -68,7 +71,6 @@ require_once 'includes/sidebar.php';
                             <th>Étudiant</th>
                             <th>Email</th>
                             <th>Cours</th>
-                            <th>Date de demande</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -78,7 +80,6 @@ require_once 'includes/sidebar.php';
                                 <td><?php echo htmlspecialchars($enrollment['firstname'] . ' ' . $enrollment['lastname']); ?></td>
                                 <td><?php echo htmlspecialchars($enrollment['email']); ?></td>
                                 <td><?php echo htmlspecialchars($enrollment['course_title']); ?></td>
-                                <td><?php echo htmlspecialchars($enrollment['created_at'] ?? 'N/A'); ?></td>
                                 <td class="actions">
                                     <form method="POST" class="d-inline">
                                         <input type="hidden" name="enrollment_id" value="<?php echo $enrollment['enrollment_id']; ?>">

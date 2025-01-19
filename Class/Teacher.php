@@ -110,8 +110,7 @@ class Teacher extends User {
                   FROM enrollments e
                   JOIN courses c ON e.course_id = c.id
                   JOIN users u ON e.student_id = u.id
-                  WHERE c.teacher_id = ? AND e.status = 'pending'
-                  ORDER BY e.created_at DESC";
+                  WHERE c.teacher_id = ? AND e.status = 'pending'";
         
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$this->id]);
