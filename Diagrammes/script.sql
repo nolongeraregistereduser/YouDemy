@@ -156,3 +156,10 @@ SHOW TABLES;
 SELECT * FROM users;
 SELECT * FROM categories;
 SELECT * FROM courses;
+
+
+-- table course adjustement
+
+ALTER TABLE courses
+ADD COLUMN content_type ENUM('video', 'document') AFTER content,
+ADD COLUMN content_url VARCHAR(255) AFTER content_type;
