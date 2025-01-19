@@ -58,29 +58,29 @@ body {
 }
 
 .profile {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0;
+    padding: 1.5rem;
+    text-align: center;
     border-bottom: 1px solid var(--gray-200);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
-.avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    object-fit: cover;
+.user-emoji {
+    font-size: 3rem;
+    display: block;
+    margin: 0 auto 1rem auto;
 }
 
 .profile-info h3 {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 600;
+    color: var(--gray-800);
+    margin: 0 0 0.5rem 0;
 }
 
 .profile-info p {
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--gray-500);
+    margin: 0;
 }
 
 /* Navigation */
@@ -188,17 +188,18 @@ body {
 }
 
 .user-menu {
+    padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 8px;
     cursor: pointer;
+    background-color: var(--gray-100);
+    border-radius: 30px;
+    transition: all 0.2s ease;
 }
 
-.avatar-small {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    object-fit: cover;
+.user-menu:hover {
+    background-color: var(--gray-200);
 }
 
 /* Statistics Grid */
@@ -1033,8 +1034,97 @@ input[type="file"].form-control::file-selector-button:hover {
     background-color: var(--gray-200);
 }
 
-/*
-SAMARA
-    
+/* Brand container and styling */
+.brand-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+}
+
+.brand {
+    padding: 2rem;
+    text-align: center;
+}
+
+.brand h2 {
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Profile container and styling */
+.profile-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-200);
+    margin-bottom: 1rem;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 250px;
+    padding: 0 1rem;
+}
+
+/* User emoji styling */
+.user-emoji {
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    padding: 10px;
+    background-color: var(--gray-100);
+    border-radius: 50%;
+}
+
+.profile .user-emoji {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    padding: 15px;
+}
+
+/* Profile info styling */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.profile-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gray-800);
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.profile-info p {
+    font-size: 1rem;
+    color: var(--gray-500);
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+/* Remove old avatar styles */
+.avatar-small,
+.avatar {
+    display: none;
+}
+
 
 

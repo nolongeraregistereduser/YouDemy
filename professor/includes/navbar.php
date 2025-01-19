@@ -9,7 +9,7 @@
             <span class="notification-badge">3</span>
         </button>
         <div class="user-menu">
-            <img src="<?php echo htmlspecialchars($user['avatar'] ?? 'https://via.placeholder.com/32'); ?>" alt="Profile" class="avatar-small">
+            <span class="user-emoji">👨‍🏫</span>
             <i class="fas fa-chevron-down"></i>
         </div>
     </div>

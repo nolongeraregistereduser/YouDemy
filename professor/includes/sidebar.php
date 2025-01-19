@@ -7,15 +7,15 @@ if (isset($teacher)) {
 ?>
 
 <aside class="sidebar">
-    <div class="logo">
-        <h1>Youdemy</h1>
+    <div class="brand" style="text-align: center; padding: 15px 0;">
+        <h2 style="margin: 0 auto;">Youdemy</h2>
     </div>
 
-    <div class="profile">
-        <img src="<?php echo htmlspecialchars($user['avatar'] ?? 'https://via.placeholder.com/150'); ?>" alt="Profile" class="avatar">
+    <div class="profile" style="display: flex; align-items: center; padding: 10px; gap: 10px; border-bottom: 1px solid #eee;">
+        <span class="user-emoji" style="font-size: 2rem;">👨‍🏫</span>
         <div class="profile-info">
-            <h3><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></h3>
-            <p><?php echo ucfirst($user['role']); ?></p>
+            <h3 style="margin: 0; font-size: 0.9rem;"><?php echo htmlspecialchars($user['firstname'] . ' ' . $user['lastname']); ?></h3>
+            <p style="margin: 0; font-size: 0.8rem; color: #666;"><?php echo ucfirst($user['role']); ?></p>
         </div>
     </div>
 
