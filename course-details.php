@@ -36,7 +36,7 @@ if ($isStudent) {
     $enrollmentStatus = $enrollmentObj->getEnrollmentStatus($studentId, $courseId);
 }
 
-// Get course preview details
+// Get course details
 $courseDetails = $courseObj->getPreviewContent($courseId);
 
 if (!$courseDetails) {
@@ -212,6 +212,128 @@ if (!$courseDetails) {
         .enroll-button:hover {
             background: #8710d8;
         }
+
+        /* Course Materials Styles */
+        .course-materials {
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .materials-header {
+            padding: 20px;
+            border-bottom: 1px solid #e3e6f0;
+        }
+
+        .materials-header h2 {
+            font-size: 20px;
+            color: #1c1d1f;
+            margin-bottom: 15px;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 8px;
+            background: #e3e6f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: #5624d0;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .content-sections {
+            padding: 20px;
+        }
+
+        .video-player {
+            width: 100%;
+            margin: 20px 0;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 400px;
+            display: block;
+        }
+
+        .document-viewer {
+            width: 100%;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .document-viewer embed {
+            display: block;
+            border: none;
+        }
+
+        .course-resources {
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e3e6f0;
+        }
+
+        .course-resources h3 {
+            font-size: 16px;
+            color: #1c1d1f;
+            margin-bottom: 15px;
+        }
+
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            color: #1c1d1f;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .resource-item:hover {
+            background: #f1f1f1;
+        }
+
+        .resource-item i {
+            color: #5624d0;
+        }
+
+        .no-resources {
+            color: #6a6f73;
+            font-style: italic;
+        }
+
+        .no-content {
+            padding: 20px;
+            text-align: center;
+            color: #6a6f73;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -234,26 +356,81 @@ if (!$courseDetails) {
                                 echo htmlspecialchars($teacherName);
                             ?>
                         </span>
-                        <span class="document-type">
-                            <i class="fas fa-file-alt"></i>
-                            <?php echo htmlspecialchars($courseDetails['document_type'] ?? 'Cours'); ?>
-                        </span>
                     </div>
-
-                    <?php if (!empty($courseDetails['tags'])): ?>
-                        <div class="course-tags">
-                            <?php foreach(explode(',', $courseDetails['tags']) as $tag): ?>
-                                <span class="tag"><?php echo htmlspecialchars(trim($tag)); ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
                 </div>
 
-                <?php if (!empty($courseDetails['image_url'])): ?>
-                    <div class="preview-image">
-                        <img src="<?php echo htmlspecialchars($courseDetails['image_url']); ?>" 
-                             alt="Aperçu du cours">
+                <?php if ($enrollmentStatus === 'approved'): ?>
+                    <div style="background: #f1f1f1; padding: 10px; margin: 10px 0;">
+                        Debug Info:<br>
+                        Content Type: <?php echo var_dump($courseDetails['content_type']); ?><br>
+                        Content URL: <?php echo var_dump($courseDetails['content_url']); ?><br>
+                        Enrollment Status: <?php echo var_dump($enrollmentStatus); ?>
                     </div>
+                    <div class="course-materials">
+                        <div class="materials-header">
+                            <h2>Contenu du cours</h2>
+                            <div class="progress-info">
+                                <div class="progress-bar">
+                                    <div class="progress" style="width: 0%"></div>
+                                </div>
+                                <span>0% complété</span>
+                            </div>
+                        </div>
+
+                        <div class="content-sections">
+                            <?php 
+                            // Verify content exists
+                            if (!empty($courseDetails['content_type']) && !empty($courseDetails['content_url'])): 
+                                
+                                if ($courseDetails['content_type'] === 'video'): ?>
+                                    <div class="video-player">
+                                        <video width="100%" height="400" controls>
+                                            <source src="/Youdemy/Uploads/<?php echo htmlspecialchars($courseDetails['content_url']); ?>" 
+                                                    type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                <?php elseif ($courseDetails['content_type'] === 'document'): ?>
+                                    <div class="document-viewer">
+                                        <embed src="/Youdemy/Uploads/<?php echo htmlspecialchars($courseDetails['content_url']); ?>"
+                                               type="application/pdf"
+                                               width="100%"
+                                               height="600">
+                                    </div>
+                                <?php endif; ?>
+                                
+                            <?php else: ?>
+                                <div class="no-content">
+                                    <p>Aucun contenu n'est disponible pour ce cours actuellement.</p>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="course-resources">
+                            <h3>Ressources supplémentaires</h3>
+                            <div class="resources-list">
+                                <?php if (!empty($courseDetails['resources'])): ?>
+                                    <?php foreach($courseDetails['resources'] as $resource): ?>
+                                        <a href="<?php echo htmlspecialchars($resource['url']); ?>" 
+                                           class="resource-item" 
+                                           target="_blank">
+                                            <i class="fas fa-file-download"></i>
+                                            <?php echo htmlspecialchars($resource['name']); ?>
+                                        </a>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <p class="no-resources">Aucune ressource supplémentaire disponible</p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <?php if (!empty($courseDetails['image_url'])): ?>
+                        <div class="preview-image">
+                            <img src="<?php echo htmlspecialchars($courseDetails['image_url']); ?>" 
+                                 alt="Aperçu du cours">
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
 
