@@ -81,12 +81,12 @@ require_once 'includes/sidebar.php';
                                 <td><?php echo htmlspecialchars($enrollment['email']); ?></td>
                                 <td><?php echo htmlspecialchars($enrollment['course_title']); ?></td>
                                 <td class="actions">
-                                    <form method="POST" class="d-inline">
+                                    <form method="POST" class="action-buttons">
                                         <input type="hidden" name="enrollment_id" value="<?php echo $enrollment['enrollment_id']; ?>">
-                                        <button type="submit" name="approve" class="btn btn-success btn-sm">
+                                        <button type="submit" name="approve" class="btn-approve">
                                             <i class="fas fa-check"></i> Approuver
                                         </button>
-                                        <button type="submit" name="reject" class="btn btn-danger btn-sm">
+                                        <button type="submit" name="reject" class="btn-reject">
                                             <i class="fas fa-times"></i> Rejeter
                                         </button>
                                     </form>
@@ -106,4 +106,83 @@ require_once 'includes/sidebar.php';
     </div>
 </div>
 
-<?php require_once 'includes/footer.php'; ?> 
+<?php require_once 'includes/footer.php'; ?>
+
+<style>
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-approve, .btn-reject {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.btn-approve {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-approve:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-reject:hover {
+    background-color: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-approve i, .btn-reject i {
+    font-size: 12px;
+}
+
+/* Table styling improvements */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: 600;
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Add some spacing between table cells */
+.table td:not(:last-child),
+.table th:not(:last-child) {
+    padding-right: 20px;
+}
+</style> 
