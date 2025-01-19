@@ -25,33 +25,40 @@ class Notification {
                     display: inline-block;
                     padding: 10px 20px;
                     background-color: #3498db;
-                    color: white;
+                    color: white !important;
                     text-decoration: none;
                     border-radius: 5px;
                     margin: 20px 0;
                 }
+                .footer { margin-top: 20px; color: #666; font-size: 12px; }
             </style>
         </head>
         <body>
             <div class='container'>
-                <h2>Félicitations M/Mme {$teacher['firstname']} {$teacher['lastname']}!</h2>
+                <h2>Félicitations {$teacher['firstname']} {$teacher['lastname']}!</h2>
                 <p>Votre compte enseignant a été approuvé sur Youdemy.</p>
                 <p>Vous pouvez maintenant:</p>
                 <ul>
-                    <li>Vous connecter à votre compte enseignant</li>
-                    <li>Créer vos cours</li>
-                    <li>Poster votre contenu</li>
-                    <li>Interagir avec vos étudiants :)</li>
+                    <li>Créer et gérer vos cours</li>
+                    <li>Interagir avec vos étudiants</li>
+                    <li>Accéder à votre tableau de bord</li>
                 </ul>
-                <a href='http://localhost/Youdemy/auth.php' class='button'>
-
+                <a href='http://{$_SERVER['HTTP_HOST']}/Youdemy/auth.php' class='button'>
                     Se connecter maintenant
                 </a>
-                <p>Merci de faire partie de notre communauté Youdemy!!</p>
+                <p>Merci de faire partie de notre communauté Youdemy!</p>
+                <div class='footer'>
+                    <p>Cet email a été envoyé automatiquement, merci de ne pas y répondre.</p>
+                </div>
             </div>
         </body>
         </html>";
         
-        return $this->mailer->send($teacher['email'], $subject, $message);
+        try {
+            return $this->mailer->send($teacher['email'], $subject, $message);
+        } catch (Exception $e) {
+            error_log("Error sending approval email: " . $e->getMessage());
+            return false;
+        }
     }
 } 

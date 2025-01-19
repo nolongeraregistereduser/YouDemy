@@ -19,7 +19,6 @@ if(isset($_POST['action']) && isset($_POST['teacher_id'])) {
     $teacherId = $_POST['teacher_id'];
     
     try {
-        // Start transaction
         $pdo->beginTransaction();
         
         $status = ($action === 'approve') ? 'active' : 'blocked';
@@ -30,16 +29,28 @@ if(isset($_POST['action']) && isset($_POST['teacher_id'])) {
         
         // If approving teacher, send notification
         if($action === 'approve') {
-            // Get teacher details
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+            // Get teacher details with explicit column selection
+            $stmt = $pdo->prepare("SELECT id, firstname, lastname, email, status FROM users WHERE id = ? AND role = 'teacher'");
             $stmt->execute([$teacherId]);
-            $teacher = $stmt->fetch();
+            $teacher = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if (!$teacher) {
+                throw new Exception("Teacher not found");
+            }
+            
+            // Debug log
+            error_log("Attempting to send email to teacher: " . json_encode($teacher));
             
             // Send approval email
-            if($notification->sendApprovalEmail($teacher)) {
+            $emailResult = $notification->sendApprovalEmail($teacher);
+            error_log("Email send result: " . ($emailResult ? "Success" : "Failed"));
+            
+            if($emailResult) {
                 $_SESSION['success'] = "Teacher approved and notification sent successfully!";
             } else {
-                $_SESSION['warning'] = "Teacher approved but notification failed to send.";
+                // Roll back if email fails
+                $pdo->rollBack();
+                throw new Exception("Failed to send approval email");
             }
         } else {
             $_SESSION['success'] = "Teacher status updated successfully!";
@@ -49,6 +60,7 @@ if(isset($_POST['action']) && isset($_POST['teacher_id'])) {
         
     } catch(Exception $e) {
         $pdo->rollBack();
+        error_log("Error in teacher approval process: " . $e->getMessage());
         $_SESSION['error'] = "Error: " . $e->getMessage();
     }
     

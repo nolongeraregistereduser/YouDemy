@@ -13,8 +13,8 @@ class Mail {
         $this->mail->isSMTP();
         $this->mail->Host       = 'smtp.gmail.com'; // Modifier selon votre serveur SMTP
         $this->mail->SMTPAuth   = true;
-        $this->mail->Username   = 'votre_email@gmail.com'; // Votre email
-        $this->mail->Password   = 'votre_mot_de_passe_app'; // Votre mot de passe d'application
+        $this->mail->Username   = 'zouhairihlima@gmail.com'; // Votre email
+        $this->mail->Password   = 'kewd mymh axzx afdu'; // Votre mot de passe d'application
         $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $this->mail->Port       = 587;
         $this->mail->CharSet    = 'UTF-8';
