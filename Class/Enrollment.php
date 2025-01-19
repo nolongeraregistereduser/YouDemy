@@ -1,0 +1,41 @@
+<?php
+class Enrollment {
+    private $conn;
+    private $table = 'enrollments';
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    public function isEnrolled($studentId, $courseId) {
+        $query = "SELECT status FROM " . $this->table . 
+                " WHERE student_id = ? AND course_id = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$studentId, $courseId]);
+        
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result && $result['status'] === 'approved';
+    }
+
+    public function requestEnrollment($studentId, $courseId) {
+        // Check if enrollment already exists
+        $query = "SELECT id FROM " . $this->table . 
+                " WHERE student_id = ? AND course_id = ?";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$studentId, $courseId]);
+        
+        if ($stmt->fetch()) {
+            return false; // Already enrolled/requested
+        }
+
+        // Create new enrollment request
+        $query = "INSERT INTO " . $this->table . 
+                " (student_id, course_id, status, request_date) 
+                 VALUES (?, ?, 'pending', NOW())";
+        
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$studentId, $courseId]);
+    }
+} 
