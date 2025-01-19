@@ -1,7 +1,7 @@
 <div class="sidebar">
-    <div class="brand">
-        <img src="../assets/images/logo.png" alt="Youdemy" class="logo">
-        <h2>Youdemy Admin</h2>
+    <div class="brand" style="text-align: center; padding: 15px 0;">
+        <span style="font-size: 2.5rem;">👨‍💼</span>
+        <h2 style="margin: 5px 0 0 0;">Youdemy Admin</h2>
     </div>
     <nav>
         <ul>
@@ -57,7 +57,7 @@
         <i class="fas fa-bars"></i>
     </button>
     <div class="brand">
-        <img src="../assets/images/logo.png" alt="Youdemy" class="logo">
+        <span style="font-size: 2rem;">👨‍💼</span>
         <h2>Youdemy Admin</h2>
     </div>
 </div> 
