@@ -9,9 +9,9 @@ class Course {
 
     public function create($data) {
         $query = "INSERT INTO " . $this->table . " 
-                 (title, description, content, image_url, video_url, teacher_id, category_id, status) 
+                 (title, description, content, content_type, content_url, image_url, teacher_id, category_id, status) 
                  VALUES 
-                 (:title, :description, :content, :image_url, :video_url, :teacher_id, :category_id, :status)";
+                 (:title, :description, :content, :content_type, :content_url, :image_url, :teacher_id, :category_id, :status)";
         
         try {
             $this->pdo->beginTransaction();
@@ -21,11 +21,12 @@ class Course {
                 ':title' => $data['title'],
                 ':description' => $data['description'],
                 ':content' => $data['content'],
+                ':content_type' => $data['content_type'],
+                ':content_url' => $data['content_url'],
                 ':image_url' => $data['image_url'],
-                ':video_url' => $data['video_url'],
                 ':teacher_id' => $data['teacher_id'],
                 ':category_id' => $data['category_id'],
-                ':status' => 'draft'
+                ':status' => 'published'
             ]);
 
             $courseId = $this->pdo->lastInsertId();
