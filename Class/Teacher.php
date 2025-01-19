@@ -103,5 +103,39 @@ class Teacher extends User {
             return false;
         }
     }
+
+    public function getPendingEnrollments() {
+        $query = "SELECT e.id as enrollment_id, e.student_id, e.course_id, e.status, 
+                         c.title as course_title, u.firstname, u.lastname, u.email
+                  FROM enrollments e
+                  JOIN courses c ON e.course_id = c.id
+                  JOIN users u ON e.student_id = u.id
+                  WHERE c.teacher_id = ? AND e.status = 'pending'
+                  ORDER BY e.created_at DESC";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([$this->id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function approveEnrollment($enrollmentId) {
+        $query = "UPDATE enrollments 
+                  SET status = 'approved' 
+                  WHERE id = ? AND 
+                        course_id IN (SELECT id FROM courses WHERE teacher_id = ?)";
+        
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$enrollmentId, $this->id]);
+    }
+
+    public function rejectEnrollment($enrollmentId) {
+        $query = "UPDATE enrollments 
+                  SET status = 'rejected' 
+                  WHERE id = ? AND 
+                        course_id IN (SELECT id FROM courses WHERE teacher_id = ?)";
+        
+        $stmt = $this->conn->prepare($query);
+        return $stmt->execute([$enrollmentId, $this->id]);
+    }
 } 
 
