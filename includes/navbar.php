@@ -11,8 +11,8 @@
     </div>
     <div class="header">
         <div class="logo">
-            <a href="../index.php">
-                <img src="../assets/images/logo.png" alt="YouDemy Logo">
+            <a href="/Youdemy/index.php">
+                <img src="/Youdemy/assets/images/logo.png" alt="YouDemy Logo">
                 YouDemy
             </a>
         </div>
@@ -23,18 +23,18 @@
         <div class="nav-links">
             <?php if(!isset($_SESSION['user'])): ?>
                 <!-- Show for non-logged in users -->
-                <a href="../auth.php" class="btn btn-login">Se connecter</a>
-                <a href="../register.php" class="btn btn-register">S'inscrire</a>
+                <a href="/Youdemy/auth.php" class="btn btn-login">Se connecter</a>
+                <a href="/Youdemy/register.php" class="btn btn-register">S'inscrire</a>
             <?php else: ?>
                 <!-- Show for logged in users -->
-                <a href="courses.php">Tous les cours</a>
-                <a href="my-learning.php">Mes cours</a>
+                <a href="/Youdemy/Student/courses.php">Tous les cours</a>
+                <a href="/Youdemy/Student/my-learning.php">Mes cours</a>
                 <div class="user-menu">
                     <span>
                         <i class="fas fa-user"></i>
                         <?php echo htmlspecialchars($_SESSION['user']['firstname']); ?>
                     </span>
-                    <a href="../logout.php" class="btn btn-logout">
+                    <a href="/Youdemy/logout.php" class="btn btn-logout">
                         <i class="fas fa-sign-out-alt"></i>
                         Déconnexion
                     </a>
