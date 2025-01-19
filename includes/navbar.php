@@ -20,8 +20,8 @@
             <a href="/Youdemy/auth.php" class="btn btn-login">Se connecter</a>
             <a href="/Youdemy/register.php" class="btn btn-register">S'inscrire</a>
         <?php else: ?>
-            <a href="/Youdemy/Student/courses.php">Tous les cours</a>
-            <a href="/Youdemy/Student/my-learning.php">Mes cours</a>
+            <a href="/Youdemy/courses.php">Tous les cours</a>
+            <a href="/Youdemy/my-learning.php">Mes cours</a>
             <div class="user-menu">
                 <span>
                     <i class="fas fa-user"></i>

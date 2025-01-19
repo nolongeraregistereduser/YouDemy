@@ -10,6 +10,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
    <link rel="stylesheet" href="includes/styleStudent.css">
+   <link rel="stylesheet" href="assets/css/styleStudent.css">
  </head>
  <body>
   <?php include 'includes/navbar.php'; ?>
@@ -19,7 +20,7 @@ session_start();
    <div class="text-content">
     <h1>Apprenez de nouvelles compétences en ligne avec YouDemy</h1>
     <p>Découvrez des milliers de cours enseignés par des experts de l'industrie. Commencez votre parcours d'apprentissage dès aujourd'hui.</p>
-    <a href="#">Commencer maintenant</a>
+    <a href="courses.php">Commencer maintenant</a>
    </div>
    <div class="image-content">
     <img src="https://storage.googleapis.com/a1aa/image/online-learning-illustration.jpg" alt="Online Learning">
@@ -209,7 +210,7 @@ session_start();
      </div>
     </div>
    </div>
-   <a class="view-all-btn" href="#">
+   <a class="view-all-btn" href="courses.php">
     Afficher tous les cours de la catégorie Science des données
    </a>
   </div>
