@@ -8,7 +8,7 @@ require_once 'Class/Enrollment.php';
 $database = new Database();
 $db = $database->getConnection();
 
-// Initialize Course object
+// Initialize objects
 $courseObj = new Course($db);
 $enrollmentObj = new Enrollment($db);
 
@@ -22,15 +22,8 @@ if (!$courseId) {
 
 // Check if user is logged in and is a student
 $isStudent = isset($_SESSION['user']) && $_SESSION['user']['role'] === 'student';
-$isEnrolled = false;
-
-if ($isStudent) {
-    $studentId = $_SESSION['user']['id'];
-    $isEnrolled = $enrollmentObj->isEnrolled($studentId, $courseId);
-}
-
-// Get enrollment status if student
 $enrollmentStatus = null;
+
 if ($isStudent) {
     $studentId = $_SESSION['user']['id'];
     $enrollmentStatus = $enrollmentObj->getEnrollmentStatus($studentId, $courseId);
@@ -179,19 +172,19 @@ if (!$courseDetails) {
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
 
-        .enrollment-status.pending i {
+        .enrollment-status i {
             font-size: 24px;
             color: #856404;
             margin-bottom: 8px;
         }
 
-        .enrollment-status.pending h3 {
+        .enrollment-status h3 {
             font-size: 16px;
             color: #856404;
             margin-bottom: 8px;
         }
 
-        .enrollment-status.pending p {
+        .enrollment-status p {
             font-size: 14px;
             color: #333;
         }
@@ -387,86 +380,43 @@ if (!$courseDetails) {
                 </div>
 
                 <?php if ($enrollmentStatus === 'approved'): ?>
-                    <div style="background: #f1f1f1; padding: 10px; margin: 10px 0;">
-                        Debug Info:<br>
-                        Content Type: <?php echo var_dump($courseDetails['content_type']); ?><br>
-                        Content URL: <?php echo var_dump($courseDetails['content_url']); ?><br>
-                        Enrollment Status: <?php echo var_dump($enrollmentStatus); ?>
-                    </div>
                     <div class="course-materials">
-                        <div class="materials-header">
-                            <h2>Contenu du cours</h2>
-                            <div class="progress-info">
-                                <div class="progress-bar">
-                                    <div class="progress" style="width: 0%"></div>
+                        <?php if (!empty($courseDetails['content_type']) && !empty($courseDetails['content_url'])): 
+                            if ($courseDetails['content_type'] === 'video'): ?>
+                                <div class="video-player">
+                                    <video width="100%" height="400" controls>
+                                        <source src="/Youdemy/<?php echo htmlspecialchars($courseDetails['content_url']); ?>" 
+                                                type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
                                 </div>
-                                <span>0% complété</span>
-                            </div>
-                        </div>
-
-                        <div class="content-sections">
-                            <?php 
-                            if (!empty($courseDetails['content_type']) && !empty($courseDetails['content_url'])): 
-                                
-                                if ($courseDetails['content_type'] === 'video'): ?>
-                                    <div class="video-player">
-                                        <video width="100%" height="400" controls>
-                                            <source src="/Youdemy/<?php echo htmlspecialchars($courseDetails['content_url']); ?>" 
-                                                    type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
+                            <?php elseif ($courseDetails['content_type'] === 'document'): ?>
+                                <div class="document-viewer">
+                                    <?php 
+                                    $fileExtension = pathinfo($courseDetails['content_url'], PATHINFO_EXTENSION);
+                                    $fullUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/Youdemy/' . $courseDetails['content_url'];
+                                    ?>
+                                    <div class="document-container">
+                                        <?php if ($fileExtension === 'pdf'): ?>
+                                            <object
+                                                data="<?php echo htmlspecialchars($fullUrl); ?>"
+                                                type="application/pdf"
+                                                width="100%"
+                                                height="800px">
+                                                <p>Impossible d'afficher le PDF. <a href="<?php echo htmlspecialchars($fullUrl); ?>" target="_blank">Cliquez ici pour le télécharger</a>.</p>
+                                            </object>
+                                        <?php else: ?>
+                                            <div class="doc-fallback">
+                                                <p>Pour voir le document, vous pouvez:</p>
+                                                <a href="<?php echo htmlspecialchars($fullUrl); ?>" class="download-btn" target="_blank">
+                                                    <i class="fas fa-download"></i> Télécharger le document
+                                                </a>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
-                                <?php elseif ($courseDetails['content_type'] === 'document'): ?>
-                                    <div class="document-viewer">
-                                        <?php 
-                                        $fileExtension = pathinfo($courseDetails['content_url'], PATHINFO_EXTENSION);
-                                        $fullUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/Youdemy/' . $courseDetails['content_url'];
-                                        ?>
-                                        <div class="document-container">
-                                            <?php if ($fileExtension === 'pdf'): ?>
-                                                <object
-                                                    data="<?php echo htmlspecialchars($fullUrl); ?>"
-                                                    type="application/pdf"
-                                                    width="100%"
-                                                    height="800px">
-                                                    <p>Impossible d'afficher le PDF. <a href="<?php echo htmlspecialchars($fullUrl); ?>" target="_blank">Cliquez ici pour le télécharger</a>.</p>
-                                                </object>
-                                            <?php else: ?>
-                                                <div class="doc-fallback">
-                                                    <p>Pour voir le document, vous pouvez:</p>
-                                                    <a href="<?php echo htmlspecialchars($fullUrl); ?>" class="download-btn" target="_blank">
-                                                        <i class="fas fa-download"></i> Télécharger le document
-                                                    </a>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                                
-                            <?php else: ?>
-                                <div class="no-content">
-                                    <p>Aucun contenu n'est disponible pour ce cours actuellement.</p>
                                 </div>
                             <?php endif; ?>
-                        </div>
-
-                        <div class="course-resources">
-                            <h3>Ressources supplémentaires</h3>
-                            <div class="resources-list">
-                                <?php if (!empty($courseDetails['resources'])): ?>
-                                    <?php foreach($courseDetails['resources'] as $resource): ?>
-                                        <a href="<?php echo htmlspecialchars($resource['url']); ?>" 
-                                           class="resource-item" 
-                                           target="_blank">
-                                            <i class="fas fa-file-download"></i>
-                                            <?php echo htmlspecialchars($resource['name']); ?>
-                                        </a>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <p class="no-resources">Aucune ressource supplémentaire disponible</p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
                 <?php else: ?>
                     <?php if (!empty($courseDetails['image_url'])): ?>
@@ -490,7 +440,7 @@ if (!$courseDetails) {
                             </form>
                         </div>
                     <?php elseif ($enrollmentStatus === 'pending'): ?>
-                        <div class="enrollment-status pending">
+                        <div class="enrollment-status">
                             <i class="fas fa-clock"></i>
                             <h3>En attente d'approbation</h3>
                             <p>Votre demande d'inscription est en cours d'examen.</p>
