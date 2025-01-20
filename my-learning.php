@@ -37,6 +37,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styleStudent.css">
+    <link rel="stylesheet" href="assets/css/course-cards.css">
     <style>
         .my-learning-header {
             background-color: #f8f9fa;
@@ -63,7 +64,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             padding: 1rem 0;
         }
 
-        .enrolled-course-card {
+        .course-card {
             background: white;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -74,7 +75,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             height: 400px;
         }
 
-        .enrolled-course-card:hover {
+        .course-card:hover {
             transform: translateY(-5px);
         }
 
@@ -85,7 +86,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             background-color: #f8f9fa;
         }
 
-        .course-info {
+        .course-content {
             padding: 1.5rem;
             flex: 1;
             display: flex;
@@ -104,7 +105,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             height: 2.8em;
         }
 
-        .course-teacher {
+        .course-author {
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 1rem;
@@ -215,16 +216,16 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php else: ?>
             <div class="course-grid">
                 <?php foreach($enrolledCourses as $course): ?>
-                    <div class="enrolled-course-card">
+                    <div class="course-card">
                         <img src="<?php echo !empty($course['image_url']) ? htmlspecialchars($course['image_url']) : '#'; ?>" 
                              alt="<?php echo htmlspecialchars($course['title']); ?>" 
                              class="course-image <?php echo empty($course['image_url']) ? 'missing' : ''; ?>"
                              onerror="this.classList.add('missing'); this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';">
-                        <div class="course-info">
+                        <div class="course-content">
                             <div class="course-title">
                                 <?php echo htmlspecialchars($course['title']); ?>
                             </div>
-                            <div class="course-teacher">
+                            <div class="course-author">
                                 <i class="fas fa-chalkboard-teacher"></i>
                                 <?php echo htmlspecialchars($course['teacher_firstname'] . ' ' . $course['teacher_lastname']); ?>
                             </div>

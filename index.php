@@ -11,6 +11,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
    <link rel="stylesheet" href="includes/styleStudent.css">
    <link rel="stylesheet" href="assets/css/styleStudent.css">
+   <link rel="stylesheet" href="assets/css/course-cards.css">
  </head>
  <body>
   <?php include 'includes/navbar.php'; ?>
