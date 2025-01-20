@@ -139,6 +139,7 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             transition: background-color 0.3s ease;
             display: inline-block;
             white-space: nowrap;
+            margin-bottom: 2rem;
         }
 
         .continue-btn:hover {
