@@ -69,6 +69,9 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 400px;
         }
 
         .enrolled-course-card:hover {
@@ -79,10 +82,14 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             width: 100%;
             height: 180px;
             object-fit: cover;
+            background-color: #f8f9fa;
         }
 
         .course-info {
             padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .course-title {
@@ -90,24 +97,36 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             font-weight: 600;
             color: #2c3e50;
             margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
         }
 
         .course-teacher {
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 1.2em;
         }
 
         .enrollment-date {
             color: #888;
             font-size: 0.8rem;
             margin-bottom: 1rem;
+            height: 1em;
         }
 
         .course-actions {
+            margin-top: auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 40px;
         }
 
         .continue-btn {
@@ -117,6 +136,8 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            display: inline-block;
+            white-space: nowrap;
         }
 
         .continue-btn:hover {
@@ -157,6 +178,20 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
         .browse-courses-btn:hover {
             background-color: #2980b9;
         }
+
+        .course-image.missing {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+
+        .course-image.missing::after {
+            content: '\f03e';
+            font-family: 'Font Awesome 5 Free';
+            font-size: 3rem;
+            color: #cbd3da;
+        }
     </style>
 </head>
 <body>
@@ -181,9 +216,10 @@ $enrolledCourses = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="course-grid">
                 <?php foreach($enrolledCourses as $course): ?>
                     <div class="enrolled-course-card">
-                        <img src="<?php echo htmlspecialchars($course['image_url']); ?>" 
+                        <img src="<?php echo !empty($course['image_url']) ? htmlspecialchars($course['image_url']) : '#'; ?>" 
                              alt="<?php echo htmlspecialchars($course['title']); ?>" 
-                             class="course-image">
+                             class="course-image <?php echo empty($course['image_url']) ? 'missing' : ''; ?>"
+                             onerror="this.classList.add('missing'); this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';">
                         <div class="course-info">
                             <div class="course-title">
                                 <?php echo htmlspecialchars($course['title']); ?>
