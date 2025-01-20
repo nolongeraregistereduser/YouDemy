@@ -11,6 +11,7 @@ session_start();
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
    <link rel="stylesheet" href="includes/styleStudent.css">
    <link rel="stylesheet" href="assets/css/styleStudent.css">
+   <link rel="stylesheet" href="assets/css/course-cards.css">
  </head>
  <body>
   <?php include 'includes/navbar.php'; ?>
@@ -23,7 +24,8 @@ session_start();
     <a href="courses.php">Commencer maintenant</a>
    </div>
    <div class="image-content">
-    <img src="https://storage.googleapis.com/a1aa/image/online-learning-illustration.jpg" alt="Online Learning">
+    <img src="https://img.freepik.com/free-vector/online-tutorials-concept_52683-37480.jpg" 
+         alt="Online Learning Illustration">
    </div>
   </div>
 
@@ -157,7 +159,7 @@ session_start();
        Meilleure vente
       </div>
       <a class="enroll-btn" href="#">
-       Enroll This Course
+       En savoir plus
       </a>
      </div>
     </div>
@@ -174,7 +176,7 @@ session_start();
        Les mieux notés
       </div>
       <a class="enroll-btn" href="#">
-       Enroll This Course
+       En savoir plus
       </a>
      </div>
     </div>
@@ -188,24 +190,7 @@ session_start();
        Dr. Firas | Europe Innovation
       </div>
       <a class="enroll-btn" href="#">
-       Enroll This Course
-      </a>
-     </div>
-    </div>
-    <div class="course-card">
-     <img alt="Image of ChatGPT and automation icons" height="400" src="https://storage.googleapis.com/a1aa/image/VkbpBzSkqUgA6rVirCErIlPCJOUB-dhMTTuq9EkQEz0.jpg" width="600"/>
-     <div class="course-content">
-      <div class="course-title">
-       Guide ChatGPT : Prompts, Bots et Automatisation (MAJ 2024)
-      </div>
-      <div class="course-author">
-       Dr. Firas | Europe Innovation
-      </div>
-      <div class="course-badge">
-       Meilleure vente
-      </div>
-      <a class="enroll-btn" href="#">
-       Enroll This Course
+       En savoir plus
       </a>
      </div>
     </div>
@@ -215,6 +200,198 @@ session_start();
    </a>
   </div>
 
+  <!-- Testimonials Section -->
+  <div class="testimonials-section">
+    <div class="testimonials-container">
+        <h2 class="testimonials-title">Ce que disent nos apprenants</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    Grâce à YouDemy, j'ai pu acquérir les compétences nécessaires en Intelligence Artificielle et ChatGPT. Aujourd'hui, je travaille comme consultant IA dans une grande entreprise.
+                </p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mohamed Alami">
+                    <div class="author-info">
+                        <div class="author-name">Mohamed Alami</div>
+                        <div class="author-title">Consultant en IA</div>
+                    </div>
+                </div>
+                <a href="courses.php?category=1" class="testimonial-link">
+                    Découvrir les cours d'IA <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    La qualité des cours de data science sur YouDemy est exceptionnelle. Les instructeurs sont des experts du domaine et le contenu est très pratique.
+                </p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Bennis">
+                    <div class="author-info">
+                        <div class="author-name">Sarah Bennis</div>
+                        <div class="author-title">Data Scientist</div>
+                    </div>
+                </div>
+                <a href="courses.php?category=2" class="testimonial-link">
+                    Explorer les cours de Data Science <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <p class="testimonial-text">
+                    J'ai commencé de zéro en programmation Python. Après 6 mois sur YouDemy, j'ai décroché mon premier emploi en tant que développeur junior.
+                </p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Karim Idrissi">
+                    <div class="author-info">
+                        <div class="author-name">Karim Idrissi</div>
+                        <div class="author-title">Développeur Python</div>
+                    </div>
+                </div>
+                <a href="courses.php?category=3" class="testimonial-link">
+                    Voir les cours Python <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+  </div>
+
   <?php include 'includes/footer.php'; ?>
  </body>
 </html>
+
+<style>
+.testimonials-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+    margin: 40px 0;
+}
+
+.testimonials-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.testimonials-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 50px;
+    font-weight: 600;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.testimonial-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 380px;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+}
+
+.quote-icon {
+    color: #3498db;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.testimonial-text {
+    flex-grow: 1;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4a5568;
+    margin-bottom: 20px;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.testimonial-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.author-info {
+    flex-grow: 1;
+}
+
+.author-name {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.author-title {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.testimonial-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s ease;
+}
+
+.testimonial-link:hover {
+    color: #2980b9;
+}
+
+.testimonial-link i {
+    font-size: 0.8rem;
+}
+
+@media (max-width: 992px) {
+    .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonials-section {
+        padding: 40px 0;
+    }
+    
+    .testimonial-card {
+        padding: 20px;
+    }
+}
+</style>
