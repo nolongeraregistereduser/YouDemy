@@ -24,7 +24,8 @@ session_start();
     <a href="courses.php">Commencer maintenant</a>
    </div>
    <div class="image-content">
-    <img src="https://storage.googleapis.com/a1aa/image/online-learning-illustration.jpg" alt="Online Learning">
+    <img src="https://img.freepik.com/free-vector/online-tutorials-concept_52683-37480.jpg" 
+         alt="Online Learning Illustration">
    </div>
   </div>
 
