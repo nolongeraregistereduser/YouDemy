@@ -22,6 +22,14 @@ $searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
 
 // Get courses based on filters
 $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
+
+// Pagination settings
+$coursesPerPage = 6;
+$totalCourses = count($courses);
+$totalPages = ceil($totalCourses / $coursesPerPage);
+$currentPage = isset($_GET['page']) ? max(1, min((int)$_GET['page'], $totalPages)) : 1;
+$startIndex = ($currentPage - 1) * $coursesPerPage;
+$paginatedCourses = array_slice($courses, $startIndex, $coursesPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +39,7 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styleStudent.css">
+    <link rel="stylesheet" href="assets/css/course-cards.css">
 </head>
 <body>
     <?php include 'includes/navbar.php'; ?>
@@ -76,10 +85,13 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
             </div>
         <?php else: ?>
             <div class="course-list">
-                <?php foreach($courses as $course): ?>
+                <?php foreach($paginatedCourses as $course): ?>
                     <div class="course-card">
-                        <img src="<?php echo htmlspecialchars($course['image_url']); ?>" 
-                             alt="<?php echo htmlspecialchars($course['title']); ?>"/>
+                        <img src="<?php echo !empty($course['image_url']) ? htmlspecialchars($course['image_url']) : '#'; ?>" 
+                             alt="<?php echo htmlspecialchars($course['title']); ?>" 
+                             class="course-image <?php echo empty($course['image_url']) ? 'missing' : ''; ?>"
+                             onerror="this.classList.add('missing'); this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';">
+                        
                         <div class="course-content">
                             <div class="course-title">
                                 <?php echo htmlspecialchars($course['title']); ?>
@@ -89,7 +101,6 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                                 <?php echo htmlspecialchars($course['teacher_name']); ?>
                             </div>
                             
-                            <!-- Tags Section -->
                             <?php if(!empty($course['tags'])): ?>
                                 <div class="course-tags">
                                     <?php foreach(explode(',', $course['tags']) as $tag): ?>
@@ -104,21 +115,89 @@ $courses = $courseObj->getAllPublished($categoryId, $searchQuery);
                                     <?php echo number_format($course['enrollment_count']); ?> étudiants
                                 </span>
                             </div>
+                            
                             <?php if($course['enrollment_count'] > 1000): ?>
                                 <div class="course-badge">
                                     Meilleure vente
                                 </div>
                             <?php endif; ?>
-                            <a class="enroll-btn" href="course-details.php?id=<?php echo $course['id']; ?>">
-                                En savoir plus
-                            </a>
+                            
+                            <div class="course-actions">
+                                <a class="enroll-btn" href="course-details.php?id=<?php echo $course['id']; ?>">
+                                    En savoir plus
+                                </a>
+                            </div>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Pagination -->
+            <?php if($totalPages > 1): ?>
+                <div class="pagination">
+                    <?php if($currentPage > 1): ?>
+                        <a href="?page=<?php echo $currentPage - 1; ?><?php echo isset($_GET['category']) ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>" class="page-link">
+                            <i class="fas fa-chevron-left"></i> Précédent
+                        </a>
+                    <?php endif; ?>
+
+                    <div class="page-numbers">
+                        <?php for($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?page=<?php echo $i; ?><?php echo isset($_GET['category']) ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>" 
+                               class="page-link <?php echo $i === $currentPage ? 'active' : ''; ?>">
+                                <?php echo $i; ?>
+                            </a>
+                        <?php endfor; ?>
+                    </div>
+
+                    <?php if($currentPage < $totalPages): ?>
+                        <a href="?page=<?php echo $currentPage + 1; ?><?php echo isset($_GET['category']) ? '&category=' . $_GET['category'] : ''; ?><?php echo isset($_GET['search']) ? '&search=' . urlencode($_GET['search']) : ''; ?>" class="page-link">
+                            Suivant <i class="fas fa-chevron-right"></i>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 
     <?php include 'includes/footer.php'; ?>
+
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .page-numbers {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-link {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover {
+            background-color: #f5f5f5;
+        }
+
+        .page-link.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .page-link i {
+            font-size: 0.8rem;
+        }
+    </style>
 </body>
 </html> 
